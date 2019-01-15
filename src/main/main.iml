@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../TEST">
+      <sourceFolder url="file://$MODULE_DIR$/../../TEST/src/test/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../samples" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="javax.javaee-api" level="project" />
+    <orderEntry type="library" name="com.bea.core.logging" level="project" />
+    <orderEntry type="library" name="com.oracle.weblogic.logging" level="project" />
+    <orderEntry type="library" name="snakeyaml-1.19" level="project" />
+    <orderEntry type="library" name="com.bea.core.i18n" level="project" />
+    <orderEntry type="library" name="com.bea.core.diagnostics.logging" level="project" />
+    <orderEntry type="library" name="com.bea.core.diagnostics.query" level="project" />
+  </component>
+</module>
