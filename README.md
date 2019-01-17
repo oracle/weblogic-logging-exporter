@@ -1,6 +1,6 @@
 # WebLogic Logging Exporter
 
-The WebLogic Logging Exporter (the "exporter") adds a log event handler to WebLogic Server, such that WLS server logs can be integrated into [Elastic Stack](https://www.elastic.co/products) in Kubernetes directly,  by using the [Elasticsearch](https://www.elastic.co/products/elasticsearch) REST API.  
+The WebLogic Logging Exporter (the "logging exporter") adds a log event handler to WebLogic Server, such that WLS server logs can be integrated into [Elastic Stack](https://www.elastic.co/products) in Kubernetes directly,  by using the [Elasticsearch](https://www.elastic.co/products/elasticsearch) REST API.  
 
 The blog, [Let WebLogic work with Elastic Stack in Kubernetes](https://blogs.oracle.com/weblogicserver/let-weblogic-work-with-elk-in-kubernetes), outlines the steps to harvest WLS server logs using Logstash so that they can be filtered, manipulated, and viewed using Elasticsearch and Kibana.
 However, that approach requires the setup of a shared volume which is outside of the pod, and the logs needs to be written to an intermediate log file for harvesting and parsing.
@@ -13,7 +13,7 @@ These instructions outline the steps to build the `weblogic-logging-exporter.jar
 
 ## Prerequisites
 
-The exporter depends on the WebLogic logging JAR which is available from the [ Oracle Maven Repository](http://maven.oracle.com/).
+The logging exporter depends on the WebLogic logging JAR which is available from the [ Oracle Maven Repository](http://maven.oracle.com/).
 
 To access the Oracle Maven Repository, there are two fundamental requirements to be aware of:
 
