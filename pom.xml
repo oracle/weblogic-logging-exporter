@@ -63,32 +63,32 @@
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-oracle-weblogic-logging</artifactId>
-            <version>12.2.1-1921971</version>
+            <artifactId>com.oracle.weblogic.logging</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-logging</artifactId>
-            <version>12.2.1-1921971</version>
+            <artifactId>com.bea.core.logging</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-diagnostics-logging</artifactId>
-            <version>3.1.0.0-1935420.1783</version>
+            <artifactId>com.bea.core.diagnostics.logging</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-i18n</artifactId>
-            <version>3.0.0.0-1933919.1781</version>
+            <artifactId>com.bea.core.i18n</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-diagnostics-query</artifactId>
-            <version>4.0.0.0-1933804.1780</version>
+            <artifactId>com.bea.core.diagnostics.query</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
