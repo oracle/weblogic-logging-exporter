@@ -125,7 +125,7 @@ If needed, specify the `proxies` that are required.
 
 #### 3. Clone the project and build it.
 ```
-git clone git@orahub.oraclecorp.com:derek.sharpe/wls-logging-exporter.git
+git clone git@orahub.oraclecorp.com:oracle/wls-logging-exporter.git
 mvn install
 ```
 
