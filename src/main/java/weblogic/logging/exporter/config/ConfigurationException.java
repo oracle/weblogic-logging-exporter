@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oracle and/or its affiliates
+ * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
  */
@@ -30,5 +30,4 @@ public class ConfigurationException extends RuntimeException {
     if (!context.isEmpty()) sb.append(" at ").append(String.join(".", context));
     return sb.toString();
   }
-
 }

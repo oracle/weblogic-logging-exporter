@@ -1,3 +1,7 @@
+// Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at
+// http://oss.oracle.com/licenses/upl.
+
 package weblogic.logging.exporter.config;
 
 import java.util.Arrays;
@@ -9,9 +13,7 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 
-/**
- * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
- */
+
 public class MapUtilsTest {
 
   @Before
