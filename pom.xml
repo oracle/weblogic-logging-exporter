@@ -10,7 +10,7 @@
     <version>0.1-SNAPSHOT</version>
 
     <name>WebLogic Logging Exporter</name>
-    <description>An exporter that integrates WLS logs into ElasticSearch and Kibana </description>
+    <description>An exporter that integrates WLS logs into ElasticSearch and Kibana</description>
 
     <url>https://orahub.oraclecorp.com/oracle/wls-logging-exporter</url>
     <inceptionYear>2018</inceptionYear>
@@ -50,6 +50,19 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.coveo</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -92,10 +105,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>test</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.scanner.ScannerException;
 
@@ -35,7 +34,6 @@ public class Config {
   private static final String INDEX_NAME = "weblogicLoggingIndexName";
   private static final String DOMAIN_UID = "domainUID";
 
-
   private String host = DEFAULT_ES_HOST;
   private int port = DEFAULT_ES_PORT;
   private String indexName = DEFAULT_INDEX_NAME;
@@ -55,12 +53,12 @@ public class Config {
     if (yaml.containsKey(BULK_SIZE)) bulkSize = MapUtils.getIntegerValue(yaml, BULK_SIZE);
     if (yaml.containsKey(INDEX_NAME)) indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
     if (yaml.containsKey(DOMAIN_UID)) domainUID = MapUtils.getStringValue(yaml, DOMAIN_UID);
-    if (bulkSize <= 1){
+    if (bulkSize <= 1) {
       bulkSize = 1;
     }
     // index name needs to be all lowercase.
     if (yaml.containsKey(INDEX_NAME)) indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
-    if ( !( indexName.toLowerCase().equals(indexName))){
+    if (!(indexName.toLowerCase().equals(indexName))) {
       indexName = indexName.toLowerCase();
       System.out.println("Index name is converted to all lower case : " + indexName);
     }
@@ -72,9 +70,9 @@ public class Config {
       return loadConfig(new FileInputStream(file));
     } catch (FileNotFoundException e) {
       System.out.println(file.toString() + "Not Found");
-    } catch (YamlParserException ex){
+    } catch (YamlParserException ex) {
       System.out.println("Error parsing configuration file : " + file.toString());
-    } catch (Exception ex){
+    } catch (Exception ex) {
       System.out.println("Error detected in configuration file.");
     }
     System.out.println("Using default for all paramters");
@@ -82,13 +80,14 @@ public class Config {
   }
 
   private void appendFilters(Object filtersYaml) {
-    for (Map<String,Object> filterYaml : getAsListOfMaps(filtersYaml)) {
+    for (Map<String, Object> filterYaml : getAsListOfMaps(filtersYaml)) {
       filterConfigs.add(FilterConfig.create(filterYaml));
     }
   }
 
   /**
    * Loads a YAML configuration to create a new configuration object.
+   *
    * @param inputStream a reader of a YAML configuration.
    * @return an ExporterConfig object that matches the parsed YAML
    */
@@ -125,7 +124,6 @@ public class Config {
     return list.isEmpty() || Map.class.isInstance(list.get(0));
   }
 
-
   private static Config loadConfig(Map<String, Object> yamlConfig) {
     if (yamlConfig == null) yamlConfig = new HashMap<>();
 
@@ -134,36 +132,48 @@ public class Config {
 
   @Override
   public String toString() {
-    return "Config{" +
-      "weblogicLoggingIndexName='" + indexName + '\'' +
-      ", ElasticSearchHost='" + host + '\'' +
-      ", ElasticSearchPort=" + port +
-      ", weblogicLoggingExporterSeverity='" + severity + '\'' +
-      ", weblogicLoggingExporterBulkSize='" + bulkSize + '\'' +
-      ", enabled=" + enabled +
-      ", weblogicLoggingExporterFilters=" + filterConfigs +
-      ", domainUID='" + domainUID + '\'' +
-      '}';
+    return "Config{"
+        + "weblogicLoggingIndexName='"
+        + indexName
+        + '\''
+        + ", ElasticSearchHost='"
+        + host
+        + '\''
+        + ", ElasticSearchPort="
+        + port
+        + ", weblogicLoggingExporterSeverity='"
+        + severity
+        + '\''
+        + ", weblogicLoggingExporterBulkSize='"
+        + bulkSize
+        + '\''
+        + ", enabled="
+        + enabled
+        + ", weblogicLoggingExporterFilters="
+        + filterConfigs
+        + ", domainUID='"
+        + domainUID
+        + '\''
+        + '}';
   }
 
-  public String getHost(){
+  public String getHost() {
     return host;
   }
 
-  public int getPort(){
+  public int getPort() {
     return port;
   }
 
-  public boolean getEnabled()
-  {
+  public boolean getEnabled() {
     return enabled;
   }
 
-  public String getIndexName(){
+  public String getIndexName() {
     return indexName;
   }
 
-  public String getSeverity(){
+  public String getSeverity() {
     return severity;
   }
 
@@ -171,10 +181,11 @@ public class Config {
     return filterConfigs;
   }
 
-  public int getBulkSize() { return bulkSize; }
+  public int getBulkSize() {
+    return bulkSize;
+  }
 
   public String getDomainUID() {
     return domainUID;
   }
-
 }

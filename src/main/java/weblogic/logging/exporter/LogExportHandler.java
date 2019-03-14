@@ -12,14 +12,12 @@ import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-
 import weblogic.diagnostics.logging.LogVariablesImpl;
 import weblogic.diagnostics.query.QueryException;
 import weblogic.i18n.logging.Severities;
@@ -41,8 +39,8 @@ public class LogExportHandler extends Handler {
   private boolean enabled = true;
 
   private String httpHostPort = "http://" + elasticSearchHost + ":" + elasticSearchPort;
-  private String singleURL = httpHostPort + "/" + indexName + "/"+ DOC_TYPE +  "/?pretty";
-  private String bulkURL = httpHostPort + "/" + indexName + "/"+ DOC_TYPE +  "/_bulk?pretty";
+  private String singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
+  private String bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
 
   private Client httpClient = ClientBuilder.newClient();
   private List<FilterConfig> filterConfigs = new ArrayList<>();
@@ -58,17 +56,20 @@ public class LogExportHandler extends Handler {
   @Override
   public void publish(LogRecord record) {
     WLLogRecord wlLogRecord = (WLLogRecord) record;
-    if (! isLoggable(record)){
+    if (!isLoggable(record)) {
       return;
     }
     String payload = recordToPayload(wlLogRecord);
-    if(bulkSize <= 1) {
+    if (bulkSize <= 1) {
       Result result = executePutOrPostOnUrl(singleURL, payload, true);
       if (!result.successful) {
         System.out.println(
-          "<weblogic.logging.exporter.LogExportHandler> logging of " + payload + " got result " + result);
+            "<weblogic.logging.exporter.LogExportHandler> logging of "
+                + payload
+                + " got result "
+                + result);
       }
-    }else{
+    } else {
       payloadBulkList.add(payload);
       if (payloadBulkList.size() >= bulkSize) {
         writeOutAllRecords();
@@ -82,9 +83,7 @@ public class LogExportHandler extends Handler {
   }
 
   @Override
-  public void close() throws SecurityException {
-
-  }
+  public void close() throws SecurityException {}
 
   @Override
   public boolean isLoggable(LogRecord logEntry) {
@@ -92,22 +91,22 @@ public class LogExportHandler extends Handler {
     if (logEntry.getLevel().intValue() < levelValue || levelValue == offValue) {
       return false;
     }
-    for(FilterConfig oneConfig: filterConfigs) {
+    for (FilterConfig oneConfig : filterConfigs) {
 
       List<String> servers = oneConfig.getServers();
-      if (servers.size() == 0){
-        if (oneConfig.getQuery() != null){
-          if (applyFilter(oneConfig, (WLLogRecord)logEntry, null)) {
+      if (servers.size() == 0) {
+        if (oneConfig.getQuery() != null) {
+          if (applyFilter(oneConfig, (WLLogRecord) logEntry, null)) {
             continue;
-          }else {
+          } else {
             return false;
           }
         }
-      }else{
-        for(String server: servers){
-          if (applyFilter(oneConfig, (WLLogRecord)logEntry, server)) {
+      } else {
+        for (String server : servers) {
+          if (applyFilter(oneConfig, (WLLogRecord) logEntry, server)) {
             continue;
-          }else {
+          } else {
             return false;
           }
         }
@@ -116,13 +115,13 @@ public class LogExportHandler extends Handler {
     return true;
   }
 
-
   private boolean applyFilter(FilterConfig oneConfig, WLLogRecord logEntry, String serverName) {
     try {
       if ((serverName == null) || (serverName.equals(logEntry.getServerName()))) {
-        return oneConfig.getQuery().executeQuery(
-          LogVariablesImpl.getInstance().getLogVariablesResolver(logEntry));
-      }else{
+        return oneConfig
+            .getQuery()
+            .executeQuery(LogVariablesImpl.getInstance().getLogVariablesResolver(logEntry));
+      } else {
         return true;
       }
     } catch (QueryException ex) {
@@ -140,9 +139,9 @@ public class LogExportHandler extends Handler {
     return "\"" + fieldName + "\": " + data;
   }
 
-  private void writeOutAllRecords(){
+  private void writeOutAllRecords() {
     StringBuilder buffer = new StringBuilder();
-    for(String oneRecord: payloadBulkList){
+    for (String oneRecord : payloadBulkList) {
       buffer.append(INDEX);
       buffer.append("\n");
       buffer.append(oneRecord);
@@ -152,18 +151,20 @@ public class LogExportHandler extends Handler {
     Result result = executePutOrPostOnUrl(bulkURL, buffer.toString(), true);
     if (!result.successful) {
       System.out.println(
-        "<weblogic.logging.exporter.LogExportHandler> logging of " + buffer.toString() + " got result " + result);
+          "<weblogic.logging.exporter.LogExportHandler> logging of "
+              + buffer.toString()
+              + " got result "
+              + result);
     }
   }
 
-  private Result executePutOrPostOnUrl(
-    String url, String payload, boolean post) {
+  private Result executePutOrPostOnUrl(String url, String payload, boolean post) {
     WebTarget target = httpClient.target(url);
-    Invocation.Builder invocationBuilder =
-      target
-        .request()
-        .accept("application/json");
-    Response response = post? invocationBuilder.post(Entity.json(payload)): invocationBuilder.put(Entity.json(payload));
+    Invocation.Builder invocationBuilder = target.request().accept("application/json");
+    Response response =
+        post
+            ? invocationBuilder.post(Entity.json(payload))
+            : invocationBuilder.put(Entity.json(payload));
     String responseString = null;
     int status = response.getStatus();
     boolean successful = false;
@@ -177,80 +178,123 @@ public class LogExportHandler extends Handler {
   }
 
   private String recordToPayload(WLLogRecord wlLogRecord) {
-    return
-      "{" +
-        dataAsJson("domainUID", domainUID) + "," +
-        dataAsJson("messageID", wlLogRecord.getId()) + "," +
-        dataAsJson("message", wlLogRecord.getMessage()) + "," +
-        dataAsJson("timestamp", wlLogRecord.getMillis()) + "," +
-        dataAsJson("serverName", wlLogRecord.getServerName()) + "," +
-        dataAsJson("threadName", wlLogRecord.getThreadName()) + "," +
-        dataAsJson("severity", wlLogRecord.getSeverityString()) + "," +
-        dataAsJson("userId", wlLogRecord.getUserId()) + "," +
-        dataAsJson("level", wlLogRecord.getLevel().toString()) + "," +
-        dataAsJson("loggerName", wlLogRecord.getLoggerName()) + "," +
-        dataAsJson("formattedDate", wlLogRecord.getFormattedDate()) + "," +
-        dataAsJson("subSystem", wlLogRecord.getSubsystem()) + "," +
-        dataAsJson("machineName", wlLogRecord.getMachineName()) + "," +
-        dataAsJson("transactionId", wlLogRecord.getTransactionId()) + "," +
-        dataAsJson("diagnosticContextId", wlLogRecord.getDiagnosticContextId()) + "," +
-        dataAsJson("sequenceNumber", wlLogRecord.getSequenceNumber()) +
-        "}";
+    return "{"
+        + dataAsJson("domainUID", domainUID)
+        + ","
+        + dataAsJson("messageID", wlLogRecord.getId())
+        + ","
+        + dataAsJson("message", wlLogRecord.getMessage())
+        + ","
+        + dataAsJson("timestamp", wlLogRecord.getMillis())
+        + ","
+        + dataAsJson("serverName", wlLogRecord.getServerName())
+        + ","
+        + dataAsJson("threadName", wlLogRecord.getThreadName())
+        + ","
+        + dataAsJson("severity", wlLogRecord.getSeverityString())
+        + ","
+        + dataAsJson("userId", wlLogRecord.getUserId())
+        + ","
+        + dataAsJson("level", wlLogRecord.getLevel().toString())
+        + ","
+        + dataAsJson("loggerName", wlLogRecord.getLoggerName())
+        + ","
+        + dataAsJson("formattedDate", wlLogRecord.getFormattedDate())
+        + ","
+        + dataAsJson("subSystem", wlLogRecord.getSubsystem())
+        + ","
+        + dataAsJson("machineName", wlLogRecord.getMachineName())
+        + ","
+        + dataAsJson("transactionId", wlLogRecord.getTransactionId())
+        + ","
+        + dataAsJson("diagnosticContextId", wlLogRecord.getDiagnosticContextId())
+        + ","
+        + dataAsJson("sequenceNumber", wlLogRecord.getSequenceNumber())
+        + "}";
   }
 
-
-  private void initialize(Config  config){
+  private void initialize(Config config) {
 
     elasticSearchHost = config.getHost();
     elasticSearchPort = config.getPort();
     enabled = config.getEnabled();
     String severity = config.getSeverity();
-    if (severity != null){
+    if (severity != null) {
       setLevel(WLLevel.getLevel(Severities.severityStringToNum(severity)));
     }
     indexName = config.getIndexName();
     bulkSize = config.getBulkSize();
     filterConfigs = config.getFilterConfigs();
-    httpHostPort="http://"+elasticSearchHost+":"+elasticSearchPort;
-    singleURL = httpHostPort + "/" + indexName + "/"+ DOC_TYPE +  "/?pretty";
-    bulkURL =   httpHostPort + "/" + indexName + "/"+ DOC_TYPE +  "/_bulk?pretty";
+    httpHostPort = "http://" + elasticSearchHost + ":" + elasticSearchPort;
+    singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
+    bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
     domainUID = config.getDomainUID();
   }
 
-
-  private void createMappings(){
+  private void createMappings() {
     // create mapping for wls elasticsearch document
-    final String mappings = "{"
-      + "  \"mappings\": {"
-      + "    \"" + DOC_TYPE + "\": {"
-      + "      \"properties\": {"
-      + "        \"domainUID\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"timestamp\": {" + "\"type\": \"date\" " + "},"
-      + "        \"sequenceNumber\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"severity\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"level\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"serverName\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"threadName\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"userId\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"loggerName\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"subSystem\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"machineName\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"transactionId\": {" + "\"type\": \"keyword\" " + "},"
-      + "        \"messageID\": {" + "\"type\": \"keyword\" " + "}"
-      + "      }"
-      + "    }"
-      + "  }"
-      + "}";
+    final String mappings =
+        "{"
+            + "  \"mappings\": {"
+            + "    \""
+            + DOC_TYPE
+            + "\": {"
+            + "      \"properties\": {"
+            + "        \"domainUID\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"timestamp\": {"
+            + "\"type\": \"date\" "
+            + "},"
+            + "        \"sequenceNumber\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"severity\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"level\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"serverName\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"threadName\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"userId\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"loggerName\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"subSystem\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"machineName\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"transactionId\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"messageID\": {"
+            + "\"type\": \"keyword\" "
+            + "}"
+            + "      }"
+            + "    }"
+            + "  }"
+            + "}";
 
     Result result = executePutOrPostOnUrl(httpHostPort + "/" + indexName, mappings, false);
     if (!result.successful) {
-      if (result.getStatus() == HttpURLConnection.HTTP_BAD_REQUEST){
-        //ignore.  this is the case where the index has been created in elastic search.
-      }else {
+      if (result.getStatus() == HttpURLConnection.HTTP_BAD_REQUEST) {
+        // ignore.  this is the case where the index has been created in elastic search.
+      } else {
         System.out.println(
-          "<weblogic.logging.exporter.LogExportHandler> issue of " + mappings + " got result " + result);
+            "<weblogic.logging.exporter.LogExportHandler> issue of "
+                + mappings
+                + " got result "
+                + result);
       }
     }
   }
-
 }

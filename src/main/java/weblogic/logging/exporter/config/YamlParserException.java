@@ -8,10 +8,7 @@ package weblogic.logging.exporter.config;
 
 import org.yaml.snakeyaml.scanner.ScannerException;
 
-/**
- * An exception thrown when there is an error parsing the YAML.
- *
- */
+/** An exception thrown when there is an error parsing the YAML. */
 public class YamlParserException extends ConfigurationException {
   private ScannerException scannerException;
 

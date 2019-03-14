@@ -7,7 +7,8 @@
 package weblogic.logging.exporter;
 
 /**
- * Holder of response received from REST requests invoked using methods in {@link LogExportHandler} class
+ * Holder of response received from REST requests invoked using methods in {@link LogExportHandler}
+ * class
  */
 public class Result {
 
@@ -42,13 +43,13 @@ public class Result {
   @Override
   public String toString() {
     return "Result{"
-      + "response='"
-      + response
-      + '\''
-      + ", status="
-      + status
-      + ", successful="
-      + successful
-      + '}';
+        + "response='"
+        + response
+        + '\''
+        + ", status="
+        + status
+        + ", successful="
+        + successful
+        + '}';
   }
 }
