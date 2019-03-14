@@ -7,7 +7,7 @@
     <groupId>oracle.kubernetes</groupId>
     <artifactId>weblogic-logging-exporter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
 
     <name>WebLogic Logging Exporter</name>
     <description>An exporter that integrates WLS logs into ElasticSearch and Kibana </description>
