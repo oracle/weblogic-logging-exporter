@@ -48,6 +48,8 @@ public class LogExportHandler extends Handler {
   private List<FilterConfig> filterConfigs = new ArrayList<>();
   private List<String> payloadBulkList = new ArrayList<>();
 
+  private String domainUID = null;
+
   public LogExportHandler(Config config) {
     initialize(config);
     createMappings();
@@ -177,6 +179,7 @@ public class LogExportHandler extends Handler {
   private String recordToPayload(WLLogRecord wlLogRecord) {
     return
       "{" +
+        dataAsJson("domainUID", domainUID) + "," +
         dataAsJson("messageID", wlLogRecord.getId()) + "," +
         dataAsJson("message", wlLogRecord.getMessage()) + "," +
         dataAsJson("timestamp", wlLogRecord.getMillis()) + "," +
@@ -211,6 +214,7 @@ public class LogExportHandler extends Handler {
     httpHostPort="http://"+elasticSearchHost+":"+elasticSearchPort;
     singleURL = httpHostPort + "/" + indexName + "/"+ DOC_TYPE +  "/?pretty";
     bulkURL =   httpHostPort + "/" + indexName + "/"+ DOC_TYPE +  "/_bulk?pretty";
+    domainUID = config.getDomainUID();
   }
 
 
@@ -220,6 +224,7 @@ public class LogExportHandler extends Handler {
       + "  \"mappings\": {"
       + "    \"" + DOC_TYPE + "\": {"
       + "      \"properties\": {"
+      + "        \"domainUID\": {" + "\"type\": \"keyword\" " + "},"
       + "        \"timestamp\": {" + "\"type\": \"date\" " + "},"
       + "        \"sequenceNumber\": {" + "\"type\": \"keyword\" " + "},"
       + "        \"severity\": {" + "\"type\": \"keyword\" " + "},"

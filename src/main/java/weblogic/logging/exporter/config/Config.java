@@ -24,6 +24,7 @@ public class Config {
   public static final int DEFAULT_ES_PORT = 9200;
   public static final String DEFAULT_INDEX_NAME = "wls";
   public static final int DEFAULT_BULK_SIZE = 1;
+  public static final String DEFAULT_DOMAIN_UID = "unknown";
 
   private static final String HOST = "ElasticSearchHost";
   private static final String PORT = "ElasticSearchPort";
@@ -32,6 +33,7 @@ public class Config {
   private static final String SEVERITY = "weblogicLoggingExporterSeverity";
   private static final String BULK_SIZE = "weblogicLoggingExporterBulkSize";
   private static final String INDEX_NAME = "weblogicLoggingIndexName";
+  private static final String DOMAIN_UID = "domainUID";
 
 
   private String host = DEFAULT_ES_HOST;
@@ -41,6 +43,7 @@ public class Config {
   private boolean enabled = true;
   private String severity = null;
   private List<FilterConfig> filterConfigs = new ArrayList<>();
+  private String domainUID = DEFAULT_DOMAIN_UID;
 
   private Config() {}
 
@@ -51,6 +54,7 @@ public class Config {
     if (yaml.containsKey(SEVERITY)) severity = MapUtils.getStringValue(yaml, SEVERITY);
     if (yaml.containsKey(BULK_SIZE)) bulkSize = MapUtils.getIntegerValue(yaml, BULK_SIZE);
     if (yaml.containsKey(INDEX_NAME)) indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
+    if (yaml.containsKey(DOMAIN_UID)) domainUID = MapUtils.getStringValue(yaml, DOMAIN_UID);
     if (bulkSize <= 1){
       bulkSize = 1;
     }
@@ -138,6 +142,7 @@ public class Config {
       ", weblogicLoggingExporterBulkSize='" + bulkSize + '\'' +
       ", enabled=" + enabled +
       ", weblogicLoggingExporterFilters=" + filterConfigs +
+      ", domainUID='" + domainUID + '\'' +
       '}';
   }
 
@@ -167,5 +172,9 @@ public class Config {
   }
 
   public int getBulkSize() { return bulkSize; }
+
+  public String getDomainUID() {
+    return domainUID;
+  }
 
 }

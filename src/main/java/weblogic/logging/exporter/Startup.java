@@ -14,12 +14,13 @@ import weblogic.logging.exporter.config.Config;
 
 public class Startup {
 
-  private static final String DEFAULT_CONFIG_FILE = "config/WeblogicLoggingExporter.yaml";
+  private static final String DEFAULT_CONFIG_FILE = "config/WebLogicLoggingExporter.yaml";
 
   public static void main(String argv[]) {
     System.out.println("======================= Weblogic Logging Exporter Startup class called");
     try {
-      Logger logger = LoggingHelper.getDomainLogger();
+      //Logger logger = LoggingHelper.getDomainLogger();
+      Logger logger = LoggingHelper.getServerLogger();
 
       /*
        We will read from the system variable for the location and name of the configuration file.
@@ -37,7 +38,7 @@ public class Startup {
       }else{
         System.out.println("Weblogic Logging Exporter is disabled");
       }
-    } catch (LoggerNotAvailableException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
