@@ -7,12 +7,12 @@
     <groupId>oracle.kubernetes</groupId>
     <artifactId>weblogic-logging-exporter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
 
     <name>WebLogic Logging Exporter</name>
-    <description>An exporter that integrates WLS logs into ElasticSearch and Kibana </description>
+    <description>An exporter that integrates WLS logs into ElasticSearch and Kibana</description>
 
-    <url>https://orahub.oraclecorp.com/derek.sharpe/wls-logging-exporter</url>
+    <url>https://orahub.oraclecorp.com/oracle/wls-logging-exporter</url>
     <inceptionYear>2018</inceptionYear>
     <licenses>
         <license>
@@ -51,6 +51,19 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.coveo</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -63,39 +76,39 @@
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-oracle-weblogic-logging</artifactId>
-            <version>12.2.1-1921971</version>
+            <artifactId>com.oracle.weblogic.logging</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-logging</artifactId>
-            <version>12.2.1-1921971</version>
+            <artifactId>com.bea.core.logging</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-diagnostics-logging</artifactId>
-            <version>3.1.0.0-1935420.1783</version>
+            <artifactId>com.bea.core.diagnostics.logging</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-i18n</artifactId>
-            <version>3.0.0.0-1933919.1781</version>
+            <artifactId>com.bea.core.i18n</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
-            <artifactId>com-bea-core-diagnostics-query</artifactId>
-            <version>4.0.0.0-1933804.1780</version>
+            <artifactId>com.bea.core.diagnostics.query</artifactId>
+            <version>12.2.1-3-0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>test</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13-beta-2</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -104,15 +117,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.meterware.simplestub</groupId>
-            <artifactId>simplestub</artifactId>
-            <version>1.2.8</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.19</version>
+            <version>1.23</version>
         </dependency>
     </dependencies>
 </project>

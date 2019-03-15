@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oracle and/or its affiliates
+ * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
  */
@@ -9,17 +9,17 @@ package weblogic.logging.exporter.config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationException extends RuntimeException {
-  public static final String BAD_YAML_FORMAT = "Configuration YAML format has errors";
+class ConfigurationException extends RuntimeException {
+  static final String BAD_YAML_FORMAT = "Configuration YAML format has errors";
   public static final String NOT_YAML_FORMAT = "Configuration is not in YAML format";
-  public static final String CONFIG_FILE_NOT_FOUND = "Configuration file cannot be found";
 
-  private List<String> context = new ArrayList<>();
+  private final List<String> context = new ArrayList<>();
 
   ConfigurationException(String description) {
     super(description);
   }
 
+  @SuppressWarnings("unused")
   void addContext(String parentContext) {
     context.add(0, parentContext);
   }
@@ -30,5 +30,4 @@ public class ConfigurationException extends RuntimeException {
     if (!context.isEmpty()) sb.append(" at ").append(String.join(".", context));
     return sb.toString();
   }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oracle and/or its affiliates
+ * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
  */
@@ -7,12 +7,14 @@
 package weblogic.logging.exporter;
 
 /**
- * Holder of response received from REST requests invoked using methods in {@link LogExportHandler} class
+ * Holder of response received from REST requests invoked using methods in {@link LogExportHandler}
+ * class
  */
-public class Result {
+@SuppressWarnings("unused")
+class Result {
 
-  final String response;
-  final int status;
+  private final String response;
+  private final int status;
   final boolean successful;
 
   public Result(String response, int status, boolean successful) {
@@ -42,13 +44,13 @@ public class Result {
   @Override
   public String toString() {
     return "Result{"
-      + "response='"
-      + response
-      + '\''
-      + ", status="
-      + status
-      + ", successful="
-      + successful
-      + '}';
+        + "response='"
+        + response
+        + '\''
+        + ", status="
+        + status
+        + ", successful="
+        + successful
+        + '}';
   }
 }

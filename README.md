@@ -125,7 +125,7 @@ If needed, specify the `proxies` that are required.
 
 #### 3. Clone the project and build it.
 ```
-git clone git@orahub.oraclecorp.com:derek.sharpe/wls-logging-exporter.git
+git clone git@orahub.oraclecorp.com:oracle/wls-logging-exporter.git
 mvn install
 ```
 
@@ -142,4 +142,4 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## License
 
-This project is licensed under the [_Oracle Universal Permissive License, Version 1.0_](http://oss.oracle.com/licenses/upl)
+This project is licensed under the [_Universal Permissive License, Version 1.0_](http://oss.oracle.com/licenses/upl)
