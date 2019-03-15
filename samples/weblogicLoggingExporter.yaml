@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oracle and/or its affiliates
+ * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
  *
  * Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
  */
@@ -21,6 +21,11 @@ ElasticSearchHost: localhost
 
 # The port that Elastic Search is listening to.   Default to 9200
 ElasticSearchPort: 9200
+
+# The "domainUID" used to uniquely identify this domain.  This is used to filter logs in Kibana by the domain they came
+# from.  You should use a unique value for each domain.  If you are using the WebLogic Kubernetes Operator, it is
+# strongly recommended you use the same value as in the domain custom resource.
+domainUid: domain1
 
 # Decide if this exporter should be enabled.  Default is true.   If set to false, nothing will be logged to Elastic Search.
 weblogicLoggingExporterEnabled:  true
