@@ -18,14 +18,12 @@ import weblogic.diagnostics.query.QueryException;
 import weblogic.diagnostics.query.QueryFactory;
 
 public class FilterConfig {
-  static final String EXPRESSION = "FilterExpression";
-  static final String SERVERS = "FilterServers";
+  private static final String EXPRESSION = "FilterExpression";
+  private static final String SERVERS = "FilterServers";
 
-  private static final String[] NO_VALUES = {};
   private String expression;
   private String[] servers = new String[0];
   private Query query = null;
-  LogVariablesImpl lv = LogVariablesImpl.getInstance();
 
   private FilterConfig(Map<String, Object> map) {
     for (String key : map.keySet()) {
@@ -33,6 +31,7 @@ public class FilterConfig {
         case EXPRESSION:
           expression = MapUtils.getStringValue(map, EXPRESSION);
           try {
+            LogVariablesImpl lv = LogVariablesImpl.getInstance();
             query = QueryFactory.createQuery(lv, lv, expression);
           } catch (QueryException ex) {
             System.out.println("Error Parsing expression: " + expression);
@@ -61,7 +60,7 @@ public class FilterConfig {
 
   private void reportDuplicateValues(String[] values, Set<String> uniqueValues) {
     ArrayList<String> duplicate = new ArrayList<>(Arrays.asList(values));
-    for (String unique : uniqueValues) duplicate.remove(duplicate.indexOf(unique));
+    for (String unique : uniqueValues) duplicate.remove(unique);
 
     throw new ConfigurationException("Duplicate values for " + duplicate);
   }

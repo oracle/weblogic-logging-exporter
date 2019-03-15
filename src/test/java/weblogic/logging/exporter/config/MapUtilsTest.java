@@ -13,10 +13,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("EmptyMethod")
 public class MapUtilsTest {
 
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() {}
 
   @Test
   public void whenStringArrayValueIsStringArray_returnAsIs() {
@@ -40,7 +41,7 @@ public class MapUtilsTest {
     assertThat(MapUtils.getStringArray(map, "values"), arrayContaining("7", "8", "true"));
   }
 
-  Map<String, Object> createMapWithValue(Object value) {
+  private Map<String, Object> createMapWithValue(Object value) {
     Map<String, Object> map = new HashMap<>();
     map.put("values", value);
     return map;

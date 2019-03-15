@@ -15,7 +15,7 @@ public class Startup {
 
   private static final String DEFAULT_CONFIG_FILE = "config/WebLogicLoggingExporter.yaml";
 
-  public static void main(String argv[]) {
+  public static void main(String[] argv) {
     System.out.println("======================= Weblogic Logging Exporter Startup class called");
     try {
       // Logger logger = LoggingHelper.getDomainLogger();

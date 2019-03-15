@@ -10,10 +10,11 @@ package weblogic.logging.exporter;
  * Holder of response received from REST requests invoked using methods in {@link LogExportHandler}
  * class
  */
-public class Result {
+@SuppressWarnings("unused")
+class Result {
 
-  final String response;
-  final int status;
+  private final String response;
+  private final int status;
   final boolean successful;
 
   public Result(String response, int status, boolean successful) {

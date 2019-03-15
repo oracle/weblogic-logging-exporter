@@ -9,7 +9,8 @@ package weblogic.logging.exporter.config;
 import java.util.List;
 import java.util.Map;
 
-public class MapUtils {
+@SuppressWarnings("SameParameterValue")
+class MapUtils {
 
   private static final String ILLEGAL_VALUE_FORMAT = "Illegal value for %s: %s. Value must be %s";
 

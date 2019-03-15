@@ -23,7 +23,7 @@ public class Config {
   public static final int DEFAULT_ES_PORT = 9200;
   public static final String DEFAULT_INDEX_NAME = "wls";
   public static final int DEFAULT_BULK_SIZE = 1;
-  public static final String DEFAULT_DOMAIN_UID = "unknown";
+  private static final String DEFAULT_DOMAIN_UID = "unknown";
 
   private static final String HOST = "ElasticSearchHost";
   private static final String PORT = "ElasticSearchPort";
@@ -40,7 +40,7 @@ public class Config {
   private int bulkSize = DEFAULT_BULK_SIZE;
   private boolean enabled = true;
   private String severity = null;
-  private List<FilterConfig> filterConfigs = new ArrayList<>();
+  private final List<FilterConfig> filterConfigs = new ArrayList<>();
   private String domainUID = DEFAULT_DOMAIN_UID;
 
   private Config() {}
@@ -75,7 +75,7 @@ public class Config {
     } catch (Exception ex) {
       System.out.println("Error detected in configuration file.");
     }
-    System.out.println("Using default for all paramters");
+    System.out.println("Using default for all parameters");
     return new Config();
   }
 
@@ -121,7 +121,7 @@ public class Config {
   }
 
   private boolean emptyOrContainsMaps(List list) {
-    return list.isEmpty() || Map.class.isInstance(list.get(0));
+    return list.isEmpty() || list.get(0) instanceof Map;
   }
 
   private static Config loadConfig(Map<String, Object> yamlConfig) {

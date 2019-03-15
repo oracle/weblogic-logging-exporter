@@ -10,7 +10,7 @@ import org.yaml.snakeyaml.scanner.ScannerException;
 
 /** An exception thrown when there is an error parsing the YAML. */
 public class YamlParserException extends ConfigurationException {
-  private ScannerException scannerException;
+  private final ScannerException scannerException;
 
   YamlParserException(ScannerException scannerException) {
     super(BAD_YAML_FORMAT);

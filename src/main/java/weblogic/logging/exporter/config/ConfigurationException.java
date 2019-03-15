@@ -9,17 +9,17 @@ package weblogic.logging.exporter.config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationException extends RuntimeException {
-  public static final String BAD_YAML_FORMAT = "Configuration YAML format has errors";
+class ConfigurationException extends RuntimeException {
+  static final String BAD_YAML_FORMAT = "Configuration YAML format has errors";
   public static final String NOT_YAML_FORMAT = "Configuration is not in YAML format";
-  public static final String CONFIG_FILE_NOT_FOUND = "Configuration file cannot be found";
 
-  private List<String> context = new ArrayList<>();
+  private final List<String> context = new ArrayList<>();
 
   ConfigurationException(String description) {
     super(description);
   }
 
+  @SuppressWarnings("unused")
   void addContext(String parentContext) {
     context.add(0, parentContext);
   }

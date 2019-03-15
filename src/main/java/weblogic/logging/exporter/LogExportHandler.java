@@ -26,7 +26,8 @@ import weblogic.logging.WLLogRecord;
 import weblogic.logging.exporter.config.Config;
 import weblogic.logging.exporter.config.FilterConfig;
 
-public class LogExportHandler extends Handler {
+@SuppressWarnings("UnnecessaryContinue")
+class LogExportHandler extends Handler {
 
   private static final String DOC_TYPE = "_doc";
   private static final String INDEX = " { \"index\" : { }} ";
@@ -36,15 +37,14 @@ public class LogExportHandler extends Handler {
   private String elasticSearchHost = Config.DEFAULT_ES_HOST;
   private int elasticSearchPort = Config.DEFAULT_ES_PORT;
   private int bulkSize = Config.DEFAULT_BULK_SIZE;
-  private boolean enabled = true;
 
   private String httpHostPort = "http://" + elasticSearchHost + ":" + elasticSearchPort;
   private String singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
   private String bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
 
-  private Client httpClient = ClientBuilder.newClient();
+  private final Client httpClient = ClientBuilder.newClient();
   private List<FilterConfig> filterConfigs = new ArrayList<>();
-  private List<String> payloadBulkList = new ArrayList<>();
+  private final List<String> payloadBulkList = new ArrayList<>();
 
   private String domainUID = null;
 
@@ -217,7 +217,8 @@ public class LogExportHandler extends Handler {
 
     elasticSearchHost = config.getHost();
     elasticSearchPort = config.getPort();
-    enabled = config.getEnabled();
+    @SuppressWarnings("unused")
+    boolean enabled = config.getEnabled();
     String severity = config.getSeverity();
     if (severity != null) {
       setLevel(WLLevel.getLevel(Severities.severityStringToNum(severity)));
@@ -286,6 +287,7 @@ public class LogExportHandler extends Handler {
 
     Result result = executePutOrPostOnUrl(httpHostPort + "/" + indexName, mappings, false);
     if (!result.successful) {
+      //noinspection StatementWithEmptyBody
       if (result.getStatus() == HttpURLConnection.HTTP_BAD_REQUEST) {
         // ignore.  this is the case where the index has been created in elastic search.
       } else {
