@@ -33,20 +33,23 @@ class LogExportHandler extends Handler {
   private static final String INDEX = " { \"index\" : { }} ";
   private static final int offValue = Level.OFF.intValue();
 
-  private String indexName = Config.DEFAULT_INDEX_NAME;
-  private String elasticSearchHost = Config.DEFAULT_ES_HOST;
-  private int elasticSearchPort = Config.DEFAULT_ES_PORT;
-  private int bulkSize = Config.DEFAULT_BULK_SIZE;
-
-  private String httpHostPort = "http://" + elasticSearchHost + ":" + elasticSearchPort;
-  private String singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
-  private String bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
-
   private final Client httpClient = ClientBuilder.newClient();
   private List<FilterConfig> filterConfigs = new ArrayList<>();
   private final List<String> payloadBulkList = new ArrayList<>();
 
-  private String domainUID = null;
+  //
+  //  These will all be set by initialize()
+  //
+  private String indexName;
+  private String publishHost;
+  private int publishPort;
+  private int bulkSize;
+  private String httpHostPort;
+  private String singleURL;
+  private String bulkURL;
+  private String fluentdURL;
+  private String domainUID;
+  private String destination;
 
   public LogExportHandler(Config config) {
     initialize(config);
@@ -215,8 +218,8 @@ class LogExportHandler extends Handler {
 
   private void initialize(Config config) {
 
-    elasticSearchHost = config.getHost();
-    elasticSearchPort = config.getPort();
+    publishHost = config.getHost();
+    publishPort = config.getPort();
     @SuppressWarnings("unused")
     boolean enabled = config.getEnabled();
     String severity = config.getSeverity();
@@ -226,10 +229,19 @@ class LogExportHandler extends Handler {
     indexName = config.getIndexName();
     bulkSize = config.getBulkSize();
     filterConfigs = config.getFilterConfigs();
-    httpHostPort = "http://" + elasticSearchHost + ":" + elasticSearchPort;
+    httpHostPort = "http://" + publishHost + ":" + publishPort;
     singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
     bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
     domainUID = config.getDomainUID();
+
+    //
+    //  Set up the publishing variables...
+    //
+
+    httpHostPort = "http://" + publishHost + ":" + publishPort;
+    singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
+    bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
+    fluentdURL = httpHostPort + "/" + indexName;
   }
 
   private void createMappings() {

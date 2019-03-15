@@ -19,14 +19,14 @@ import org.yaml.snakeyaml.scanner.ScannerException;
 
 public class Config {
 
-  public static final String DEFAULT_ES_HOST = "localhost";
-  public static final int DEFAULT_ES_PORT = 9200;
+  public static final String DEFAULT_HOST = "localhost";
+  public static final int DEFAULT_PORT = 9200;
   public static final String DEFAULT_INDEX_NAME = "wls";
   public static final int DEFAULT_BULK_SIZE = 1;
   private static final String DEFAULT_DOMAIN_UID = "unknown";
 
-  private static final String HOST = "ElasticSearchHost";
-  private static final String PORT = "ElasticSearchPort";
+  private static final String HOST = "publishHost";
+  private static final String PORT = "publishPort";
   private static final String FILTERS = "weblogicLoggingExporterFilters";
   private static final String ENABLED = "weblogicLoggingExporterEnabled";
   private static final String SEVERITY = "weblogicLoggingExporterSeverity";
@@ -34,8 +34,8 @@ public class Config {
   private static final String INDEX_NAME = "weblogicLoggingIndexName";
   private static final String DOMAIN_UID = "domainUID";
 
-  private String host = DEFAULT_ES_HOST;
-  private int port = DEFAULT_ES_PORT;
+  private String host = DEFAULT_HOST;
+  private int port = DEFAULT_PORT;
   private String indexName = DEFAULT_INDEX_NAME;
   private int bulkSize = DEFAULT_BULK_SIZE;
   private boolean enabled = true;
@@ -46,18 +46,34 @@ public class Config {
   private Config() {}
 
   private Config(Map<String, Object> yaml) {
-    if (yaml.containsKey(HOST)) host = MapUtils.getStringValue(yaml, HOST);
-    if (yaml.containsKey(PORT)) port = MapUtils.getIntegerValue(yaml, PORT);
-    if (yaml.containsKey(ENABLED)) enabled = MapUtils.getBooleanValue(yaml, ENABLED);
-    if (yaml.containsKey(SEVERITY)) severity = MapUtils.getStringValue(yaml, SEVERITY);
-    if (yaml.containsKey(BULK_SIZE)) bulkSize = MapUtils.getIntegerValue(yaml, BULK_SIZE);
-    if (yaml.containsKey(INDEX_NAME)) indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
-    if (yaml.containsKey(DOMAIN_UID)) domainUID = MapUtils.getStringValue(yaml, DOMAIN_UID);
+    if (yaml.containsKey(HOST)) {
+      host = MapUtils.getStringValue(yaml, HOST);
+    }
+    if (yaml.containsKey(PORT)) {
+      port = MapUtils.getIntegerValue(yaml, PORT);
+    }
+    if (yaml.containsKey(ENABLED)) {
+      enabled = MapUtils.getBooleanValue(yaml, ENABLED);
+    }
+    if (yaml.containsKey(SEVERITY)) {
+      severity = MapUtils.getStringValue(yaml, SEVERITY);
+    }
+    if (yaml.containsKey(BULK_SIZE)) {
+      bulkSize = MapUtils.getIntegerValue(yaml, BULK_SIZE);
+    }
+    if (yaml.containsKey(INDEX_NAME)) {
+      indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
+    }
+    if (yaml.containsKey(DOMAIN_UID)) {
+      domainUID = MapUtils.getStringValue(yaml, DOMAIN_UID);
+    }
     if (bulkSize <= 1) {
       bulkSize = 1;
     }
     // index name needs to be all lowercase.
-    if (yaml.containsKey(INDEX_NAME)) indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
+    if (yaml.containsKey(INDEX_NAME)) {
+      indexName = MapUtils.getStringValue(yaml, INDEX_NAME);
+    }
     if (!(indexName.toLowerCase().equals(indexName))) {
       indexName = indexName.toLowerCase();
       System.out.println("Index name is converted to all lower case : " + indexName);
@@ -136,10 +152,10 @@ public class Config {
         + "weblogicLoggingIndexName='"
         + indexName
         + '\''
-        + ", ElasticSearchHost='"
+        + ", publishHost='"
         + host
         + '\''
-        + ", ElasticSearchPort="
+        + ", publishPort="
         + port
         + ", weblogicLoggingExporterSeverity='"
         + severity

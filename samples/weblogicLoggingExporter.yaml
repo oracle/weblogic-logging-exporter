@@ -16,11 +16,11 @@
 # and gives a warning.
 weblogicLoggingIndexName: wls
 
-# The host that Elastic Search is running on.  Default to localhost
-ElasticSearchHost: localhost
+# The host that Elastic Search is running on.  Defaults to localhost.
+publishHost: localhost
 
-# The port that Elastic Search is listening to.   Default to 9200
-ElasticSearchPort: 9200
+# The port that Elastic Search is listening to.   Defaults to 9200.
+publishPort: 9200
 
 # The "domainUID" used to uniquely identify this domain.  This is used to filter logs in Kibana by the domain they came
 # from.  You should use a unique value for each domain.  If you are using the WebLogic Kubernetes Operator, it is
