@@ -55,15 +55,22 @@ public class MapUtils {
   @SuppressWarnings("unchecked")
   static String[] getStringArray(Map<String, Object> map, String key) {
     Object value = map.get(key);
-    if (value instanceof List) return toStringArray((List<Object>) value);
-    else if (!value.getClass().isArray()) return new String[] {value.toString()};
-    else if (value.getClass().getComponentType() == String.class) return (String[]) value;
-    else throw createBadTypeException(key, value, "an array of strings");
+    if (value instanceof List) {
+      return toStringArray((List<Object>) value);
+    } else if (!value.getClass().isArray()) {
+      return new String[] {value.toString()};
+    } else if (value.getClass().getComponentType() == String.class) {
+      return (String[]) value;
+    } else {
+      throw createBadTypeException(key, value, "an array of strings");
+    }
   }
 
   private static String[] toStringArray(List<Object> list) {
     String[] result = new String[list.size()];
-    for (int i = 0; i < result.length; i++) result[i] = list.get(i).toString();
+    for (int i = 0; i < result.length; i++) {
+      result[i] = list.get(i).toString();
+    }
     return result;
   }
 
@@ -77,10 +84,16 @@ public class MapUtils {
    */
   static Boolean getBooleanValue(Map<String, Object> map, String key) {
     Object value = map.get(key);
-    if (value instanceof Boolean) return (Boolean) value;
+    if (value instanceof Boolean) {
+      return (Boolean) value;
+    }
 
-    if (inValues(value, TRUE_VALUES)) return true;
-    if (inValues(value, FALSE_VALUES)) return false;
+    if (inValues(value, TRUE_VALUES)) {
+      return true;
+    }
+    if (inValues(value, FALSE_VALUES)) {
+      return false;
+    }
     throw new ConfigurationException("Unable to interpret '" + value + "' as a boolean value");
   }
 
@@ -88,8 +101,11 @@ public class MapUtils {
   private static final String[] FALSE_VALUES = {"false", "f", "no", "off", "n"};
 
   private static boolean inValues(Object candidate, String... matches) {
-    for (String match : matches) if (candidate.toString().equalsIgnoreCase(match)) return true;
-
+    for (String match : matches) {
+      if (candidate.toString().equalsIgnoreCase(match)) {
+        return true;
+      }
+    }
     return false;
   }
 

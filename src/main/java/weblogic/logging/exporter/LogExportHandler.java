@@ -179,8 +179,6 @@ public class LogExportHandler extends Handler {
 
   private String recordToPayload(WLLogRecord wlLogRecord) {
     return "{"
-        + dataAsJson("domainUID", domainUID)
-        + ","
         + dataAsJson("messageID", wlLogRecord.getId())
         + ","
         + dataAsJson("message", wlLogRecord.getMessage())
@@ -210,6 +208,8 @@ public class LogExportHandler extends Handler {
         + dataAsJson("diagnosticContextId", wlLogRecord.getDiagnosticContextId())
         + ","
         + dataAsJson("sequenceNumber", wlLogRecord.getSequenceNumber())
+        + ","
+        + dataAsJson("domainUID", domainUID)
         + "}";
   }
 
@@ -240,9 +240,6 @@ public class LogExportHandler extends Handler {
             + DOC_TYPE
             + "\": {"
             + "      \"properties\": {"
-            + "        \"domainUID\": {"
-            + "\"type\": \"keyword\" "
-            + "},"
             + "        \"timestamp\": {"
             + "\"type\": \"date\" "
             + "},"
@@ -277,6 +274,9 @@ public class LogExportHandler extends Handler {
             + "\"type\": \"keyword\" "
             + "},"
             + "        \"messageID\": {"
+            + "\"type\": \"keyword\" "
+            + "},"
+            + "        \"domainUID\": {"
             + "\"type\": \"keyword\" "
             + "}"
             + "      }"
