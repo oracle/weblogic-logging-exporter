@@ -22,6 +22,7 @@ The following features are planned for the next few releases:
 * How to [download the release](#download-the-release)
 * How to [build from source](#building-from-source)
 * How to [install](#installation) the WebLogic Logging exporter
+* How to [run Elasticsearch and Kibana locally for testing](#running-elasticsearch-and-kibana-locally-for-testing)
 * How to [contribute](#contributing) to this project
 * [License](#license) information
 
@@ -178,6 +179,10 @@ health status index               uuid pri rep docs.count docs.deleted store.siz
 yellow open   wls                 q4Q2v2dXTBOyYsHZMdDe3H 5   1         23            0      101kb          101kb
 ```
 
+## Running Elasticsearch and Kibana locally for testing
+
+If you wish to test on your local machine, a [sample](samples/run-elk-local.sh) is provided to run Elasticsearch
+and Kibana in Docker on your local machine.
 
 ## Contributing
 
