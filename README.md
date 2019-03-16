@@ -7,7 +7,7 @@ The WebLogic Logging Exporter adds a log event handler to WebLogic Server,
 such that WebLogic server logs can be integrated into [Elastic Stack](https://www.elastic.co/products)
 in Kubernetes directly,  by using the [Elasticsearch](https://www.elastic.co/products/elasticsearch) REST API.
 
-The current version of the WebLogic Logging Exporter is 0.1, which was released on March 20, 2019.
+The current version of the WebLogic Logging Exporter is 0.1, which was released on March 16, 2019.
 This version supports pushing logs into Elasticsearch using the REST API.
 
 The following features are planned for the next few releases:
