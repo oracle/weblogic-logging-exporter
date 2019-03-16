@@ -4,7 +4,7 @@ The goal of this project is to provide an easy to configure, robust, and product
 WLS log information through Elasticsearch and Kibana.
 
 The WebLogic Logging Exporter adds a log event handler to WebLogic Server,
-such that WebLogic server logs can be integrated into [Elastic Stack](https://www.elastic.co/products)
+such that WebLogic Server logs can be integrated into [Elastic Stack](https://www.elastic.co/products)
 in Kubernetes directly,  by using the [Elasticsearch](https://www.elastic.co/products/elasticsearch) REST API.
 
 The current version of the WebLogic Logging Exporter is 0.1, which was released on March 16, 2019.
@@ -12,9 +12,9 @@ This version supports pushing logs into Elasticsearch using the REST API.
 
 The following features are planned for the next few releases:
 
-* Push logs into a fleuntd aggregator using the REST API,
+* Push logs into a fleuntd aggregator using the REST API.
 * Write logs in JSON format into the file system so that they could be collected and published by a
-  sidecar, e.g. fluentd or Logstash,
+  sidecar, e.g. fluentd or Logstash.
 * Provide the ability to publish other logs (i.e. other than the server logs).
 
 ## Contents
@@ -37,9 +37,9 @@ You can download the WebLogic Logging Exporter already compiled for you from the
 If you prefer, you can build the WebLogic Logging Exporter from the source code.  To do this, you will
 need access to some WebLogic Server libraries.  There are two ways to get these libraries:
 
-* Populate you local Maven repository with the required files from a local WebLogic Server installation
+* Populate your local Maven repository with the required files from a local WebLogic Server installation
   using the Oracle Maven Synchronization plugin, or
-* Use the Oracle Maven repository to download them as part of your build, this requires registration and
+* Use the Oracle Maven repository to download them as part of your build; this requires registration and
   configuring your local Maven installation with the appropriate authentication details.
 
 ### Populating your local Maven repository from a local WebLogic Server installation
@@ -49,13 +49,13 @@ to install the necessary dependencies into your local Maven repository.
 
 There are two steps:
 
-* Install the Oracle Maven Synchronization plugin,
-* Run the "push" goal to populate your local Maven repository from your WebLogic Server installation.
+* Install the Oracle Maven Synchronization plugin.
+* Run the `push` goal to populate your local Maven repository from your WebLogic Server installation.
 
 #### Installing the Oracle Maven Synchronization plugin
 
-To install the plugin, navigate to your WebLogic Server installation then enter the commands (this example
-assumes you installed WebLogic Server in /u01/wlshome):
+To install the plugin, navigate to your WebLogic Server installation, then enter the commands (this example
+assumes you installed WebLogic Server in `/u01/wlshome`):
 
 ```
 cd /u01/wlshome/oracle_common/plugins/maven/com/oracle/12.2.1/oracle-maven-sync
@@ -76,7 +76,7 @@ normally located at `~/.m2/repository/com/oracle/weblogic`.
 
 ### Using the Oracle Maven repository
 
-Note: If you populated your local repository using the Oracle Maven Synchronization plugin, then this
+**Note**: If you populated your local repository using the Oracle Maven Synchronization plugin, then this
 step is *not* required.
 
 To access the Oracle Maven repository, refer to the documentation
@@ -104,8 +104,8 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
 
 1. Add a startup class to your domain configuration.
 
-   * In the administration console, navigate to "Environment" then "Startup and Shutdown classes" in the main menu.
-   * Add a new Startup class, you may choose any descriptive name, and the class name must be
+   * In the Administration Console, navigate to "Environment" then "Startup and Shutdown classes" in the main menu.
+   * Add a new Startup class. You may choose any descriptive name and the class name must be
      `weblogic.logging.exporter.Startup`.
    * Target the startup class to each server that you want to export logs from.
 
@@ -163,14 +163,14 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
 
 1. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
    Logging Exporter and start sending their logs to the specified Elasticsearch instance.  You can then
-   access them in Kibana as shown in the example below, you will need to create an index first and then go to
+   access them in Kibana as shown in the example below. You will need to create an index first and then go to
    the visualization page.
 
 ![Kibana screenshot](images/screenshot.png)
 
 
 You can also use a curl command similar to the following example to verify that logs have been posted to Elasticsearch.
-The default index name is "wls", and docs.count should be greater than zero indicating that log entries
+The default index name is `wls`, and `docs.count` should be greater than zero indicating that log entries
 are being sent to Elasticsearch.
 
 ```
