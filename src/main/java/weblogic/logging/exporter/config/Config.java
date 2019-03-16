@@ -23,7 +23,7 @@ public class Config {
   public static final int DEFAULT_PORT = 9200;
   public static final String DEFAULT_INDEX_NAME = "wls";
   public static final int DEFAULT_BULK_SIZE = 1;
-  private static final String DEFAULT_DOMAIN_UID = "unknown";
+  public static final String DEFAULT_DOMAIN_UID = "unknown";
 
   private static final String HOST = "publishHost";
   private static final String PORT = "publishPort";

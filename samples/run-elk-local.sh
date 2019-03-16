@@ -1,4 +1,8 @@
 #!/bin/bash
+# Copyright 2018, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+# start elasticsearch...
 docker run -d                     \
   --name elasticsearch            \
   -p 9200:9200                    \
@@ -6,6 +10,7 @@ docker run -d                     \
   -e "discovery.type=single-node" \
   docker.elastic.co/elasticsearch/elasticsearch:6.2.2
 
+# start kibana...
 docker run -d                         \
   --name kibana                       \
   -p 5601:5601                        \
