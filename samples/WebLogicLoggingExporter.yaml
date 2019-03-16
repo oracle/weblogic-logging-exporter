@@ -7,7 +7,7 @@
 # This is a sample configuration file for weblogic Logging Exporter
 # The exporter will look for the file specified by the system variable "WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE",
 # if this is not specified, will search by the default name under domain config directory.
-# By default, the logging exporter will look for this file "weblogicLoggingExporter.yaml" under the
+# By default, the logging exporter will look for this file "WebLogicLoggingExporter.yaml" under the
 # domain config directory.
 # If file doesn't exist, will use all the defaults.
 

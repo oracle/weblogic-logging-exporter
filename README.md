@@ -85,123 +85,13 @@ normally located at `~/.m2/repository/com/oracle/weblogic`.
 Note: If you populated your local repository using the Oracle Maven Synchronization plugin, then this
 step is *not* required.
 
-To access the Oracle Maven repository, there are two requirements to be aware of:
+To access the Oracle Maven repository, refer to the documentation
+[available here](https://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9010).
 
-1. You must be using [Maven 3.2.5](http://maven.apache.org/docs/3.2.5/release-notes.html) or later.
-This contains the version of the [Wagon 2.8](http://maven.apache.org/wagon/) component that has
-been enhanced to support access to artifacts that are protected by
-[HTTP authentication schemes](https://issues.apache.org/jira/projects/WAGON/issues/WAGON-422).
-
-2. You must be registered with OTN and have accepted the license agreement to access and use the
-Oracle Maven Repository.  This can be done with either a new or an existing OTN user account by
-accessing the http://maven.oracle.com site and selecting the registration link.
-After registering, then you just need to configure your local Maven environment with the details
-of the Oracle Maven Repository, including the information that relates to the authentication model
-specifying your OTN user name and password.
-
-#### Configure Maven
-
-#### 1. Encrypt your OTN Password.
-
-You need to configure Maven to use the Oracle Maven Repository. This involves telling Maven about the repository and providing the necessary information to authenticate to the repository.
-The following steps show you how to save your OTN password in your `settings.xml` file so  that you do not have to specify it manually every time.
-Oracle recommends that you encrypt your password, using the utilities provided with Maven.
-
-Here are the steps to encrypt your password and save it in your settings.   For more information, refer to [Maven Password Encryption](http://maven.apache.org/guides/mini/guide-encryption.html).
-
-```
-mvn --encrypt-master-password my_master_password
-```
-The output will be a string similar to this:  
-
-`{abcdefghijklmnopqrstuvwxyz123=}`
-
-Save this value in your Maven `settings-security.xml` file.
-
-A copy of your `~/.m2/settings-security.xml` file will look like this:
-```
-<settingsSecurity>
-  <master>{abcdefghijklmnopqrstuvwxyz123=}</master>
-</settingsSecurity>
-```
-
-Now that you have a master password defined, you can encrypt your OTN password using the following command:
-```
-mvn --encrypt-password my_OTN_password
-```
-The output will be another string that looks like this:  
-
-`{==thisIs12My34_OTN_45_encrypted==}`
-
-This will be the password that you provide in the `server` section of your `settings.xml` file when you configure the HTTP Wagon.  
-
-#### 2. Add the Oracle Maven Repository to your `settings.xml` file.
-
-Add a repository definition to your Maven `settings.xml` file. The repository definition should look like the following:
-
-```
-<profiles>
-    <profile>
-      <id>main</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <repositories>
-        <repository>
-          <id>maven.oracle.com</id>
-          <url>https://maven.oracle.com</url>
-          <layout>default</layout>
-          <releases>
-             <enabled>true</enabled>
-          </releases>
-        </repository>
-      </repositories>
-
-      <pluginRepositories>
-        <pluginRepository>
-          <id>maven.oracle.com</id>
-          <url>https://maven.oracle.com</url>
-        </pluginRepository>
-      </pluginRepositories>
-    </profile>
-  </profiles>
-```
-
-The Maven `settings.xml` file requires additional settings to support the Oracle Maven Repository.
-To configure the HTTP Wagon, add the following `<server>` element to the `<servers>` section of the Maven `settings.xml` file.
-```
-<servers>
-    <server>
-      <username>my_OTN_user_name</username>
-      <password>{==thisIs12My34_OTN_45_encrypted==}</password>
-      <configuration>
-        <basicAuthScope>
-          <host>ANY</host>
-          <port>ANY</port>
-          <realm>OAM 11g</realm>
-        </basicAuthScope>
-        <httpConfiguration>
-          <all>
-            <params>
-              <property>
-                <name>http.protocol.allow-circular-redirects</name>
-                <value>%b,true</value>
-              </property>
-            </params>
-          </all>
-        </httpConfiguration>
-      </configuration>
-      <id>maven.oracle.com</id>
-    </server>
-  </servers>
-```
-
-If needed, specify the `proxies` that are required.
 
 ### Building the WebLogic Logging Exporter
 
-To build the WebLogic Logging Exporter, simply clone the project from GitHub and then build it
-with Maven:
+To build the WebLogic Logging Exporter, clone the project from GitHub and then build it with Maven:
 
 ```
 git clone git@orahub.oraclecorp.com:oracle/wls-logging-exporter.git
@@ -235,21 +125,59 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
     </startup-class>
     ```
 
-1. Add `weblogic-logging-exporter.jar` and `snakeyaml.jar` to your classpath
+1. Add `weblogic-logging-exporter.jar` and `snakeyaml-1.23.jar` to your classpath.
 
-This project requires the YAML  parser  to parse the configuration file.   Thus you also need to add the
-snakeyaml.jar to your class path.   If you have build the project yourself,  the jar should be available as
-repository/org/yaml/snakeyaml/1.19/snakeyaml-1.19.jar,  or you can download that from
-https://jar-download.com/artifacts/org.yaml/snakeyaml/1.19/source-code
+   This project requires `snakeyaml` to parse the YAML configuration file.  If you built the project locally,
+   you can find this JAR file in your local maven repository at `~/.m2/repository/org/yaml/snakeyaml/1.23/snakeyaml-1.23.jar`.
+   Otherwise, you can download it from [Maven Central](https://search.maven.org/artifact/org.yaml/snakeyaml/1.23/bundle).
 
-You may want to create a file named "WebLogicLoggingExporter.yaml"  and put it under the config directory
-of domain home. This is the default location.  Or you can specify a system variable named
-"WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE" and have it pointed to the configuration file.
-Refer to the later section for the content of this file.
+   Place this file in a suitable location, e.g. your domain directory.
 
-Restart the domain,  the domain logs will be posted to ElasticSearch.   You can do the following curl
-command to verify that domain logs has been posted to Elasticsearch.   The default index name is "wls",
-and docs.count should be greater than 0 indicating that log entries is being sent to ElasticSearch.
+   Update the server classpath to include these two files.  This can be done by adding a statement to the end of your
+   `setDomainEnv.sh` script in your domain's `bin` directory as follows (this example assumes your domain
+   directory is `/u01/base_domain`):
+
+   ```
+   export CLASSPATH="/u01/base_domain/weblogic-logging-exporter-0.1.jar:/u01/base_domain/snakeyaml-1.23.jar:$CLASSPATH"
+   ```
+
+1. Create a configuration file for the WebLogic Logging Exporter.
+
+   Create a file named `WebLogicLoggingExporter.yaml` in your domain's `config` directory.  You can copy the
+   [sample provided in this project](samples/WebLogicLoggingExporter.yaml) as a starting point.  That sample
+   contains details of all of the available configuration options.  A completed configuration file might look
+   like this:
+
+   ```
+   publishHost:  localhost
+   publishPort:  9200
+   domainUID:  domain1
+   weblogicLoggingExporterEnabled: true
+   weblogicLoggingIndexName:  wls
+   weblogicLoggingExporterSeverity:  Notice
+   weblogicLoggingExporterBulkSize: 1
+   weblogicLoggingExporterFilters:
+   - filterExpression:  'severity > Warning'
+   ```
+
+   Note that you must give a unique `domainUID` to each domain.  This value is used to filter logs by domain when you
+   send the logs from multiple domains to the same Elasticsearch server.  If you are using the WebLogic Kubernetes
+   Operator, it is strongly recommended that you use the same `domainUID` value that you use for the domain.
+
+   If you prefer to place the configuration file in a different location, you can set the environment variable
+   `WEBLOGIC_LOGGING_EXPORTE_CONFIG_FILE` to point to the location of the file.
+
+1. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
+   Logging Exporter and start sending their logs to the specified Elasticsearch instance.  You can then
+   access them in Kibana as shown in the example below, you will need to create an index first and then go to
+   the visualization page.
+
+![Kibana screenshot](images/screenshot.png)
+
+
+You can also use a curl command similar to the following example to verify that logs have been posted to Elasticsearch.
+The default index name is "wls", and docs.count should be greater than zero indicating that log entries
+are being sent to Elasticsearch.
 
 ```
 $ curl "localhost:9200/_cat/indices?v"
