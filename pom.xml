@@ -21,6 +21,7 @@
         </license>
     </licenses>
 
+    <!--
     <repositories>
         <repository>
             <releases>
@@ -39,6 +40,7 @@
             <url>https://maven.oracle.com</url>
         </pluginRepository>
     </pluginRepositories>
+    -->
 
     <build>
         <plugins>
