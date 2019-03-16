@@ -102,7 +102,6 @@ Here are the steps to encrypt your password and save it in your settings.   For 
 
 ```
 mvn --encrypt-master-password my_master_password
-
 ```
 The output will be a string similar to this:  
 
@@ -208,7 +207,7 @@ TBD.  Update how to integrate this JAR into WebLogic Kubernetes operator.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 
 ## License
