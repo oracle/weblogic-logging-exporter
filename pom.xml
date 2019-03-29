@@ -71,6 +71,34 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- for junit 5 -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <!-- for future use
+                    <groups>acceptance | !feature-a</groups>
+                    <excludedGroups>integration, regression</excludedGroups>
+                    -->
+                    <excludes>
+                        <exclude/>
+                    </excludes>
+                    <!-- for future use
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.conditions.deactivate = *
+                            junit.jupiter.extensions.autodetection.enabled = true
+                            junit.jupiter.testinstance.lifecycle.default = per_class
+                        </configurationParameters>
+                    </properties>
+                    -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.0</version>
+            </plugin>
+            <!-- end -->
         </plugins>
     </build>
 
@@ -112,15 +140,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13-beta-2</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.4.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-junit</artifactId>
-            <version>2.0.0.0</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.4.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
