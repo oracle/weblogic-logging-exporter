@@ -1,0 +1,12 @@
+# Test config file
+# This one has an upper case index name, which should be converted to lower case
+
+publishHost: host1
+publishPort: 1234
+weblogicLoggingExporterFilters:
+- FilterExpression:  MSGID != 'BEA-000449'
+weblogicLoggingExporterEnabled: false
+weblogicLoggingExporterSeverity: Warning
+weblogicLoggingExporterBulkSize: 2
+weblogicLoggingIndexName: INDEX2
+domainUID: domain1
