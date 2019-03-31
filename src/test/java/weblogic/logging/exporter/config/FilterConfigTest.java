@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,5 +93,20 @@ public class FilterConfigTest {
         "FilterServers", new String[] {"managed-server-1", "managed-server-2", "managed-server-1"});
 
     assertThrows(ConfigurationException.class, () -> FilterConfig.create(map));
+  }
+
+  @DisplayName("Check getServers() returns the right data")
+  @Test
+  public void checkGetServersWorks() {
+    Map<String, Object> map = new HashMap<>();
+    map.put("FilterServers", new String[] {"managed-server-1", "managed-server-2"});
+    FilterConfig filterConfig = FilterConfig.create(map);
+
+    assertTrue(filterConfig.getServers() instanceof List);
+    assertEquals(2, filterConfig.getServers().size());
+    assertTrue(filterConfig.getServers().get(0) instanceof String);
+    assertEquals("managed-server-1", filterConfig.getServers().get(0));
+    assertTrue(filterConfig.getServers().get(1) instanceof String);
+    assertEquals("managed-server-2", filterConfig.getServers().get(1));
   }
 }
