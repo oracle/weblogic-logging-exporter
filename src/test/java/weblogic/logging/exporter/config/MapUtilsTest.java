@@ -44,9 +44,61 @@ public class MapUtilsTest {
     assertThat(MapUtils.getStringArray(map, "values"), arrayContaining("7", "8", "true"));
   }
 
-  @DisplayName("Check getBooleanValue for true values")
+  @DisplayName("After creating a map, check that 'good' true values are correctly interpreted")
   @Test
-  public void checkGetBooleanForTrueValues() {
+  public void afterCreateMap_checkGoodTrueValues() {
+    Map<String, Object> map = createMapOfTrueValues();
+
+    assertEquals(true, MapUtils.getBooleanValue(map, "1"));
+    assertEquals(true, MapUtils.getBooleanValue(map, "2"));
+    assertEquals(true, MapUtils.getBooleanValue(map, "3"));
+    assertEquals(true, MapUtils.getBooleanValue(map, "4"));
+    assertEquals(true, MapUtils.getBooleanValue(map, "5"));
+  }
+
+  @DisplayName("After creating a map, check that 'bad' true values are correctly interpreted")
+  @Test
+  public void afterCreateMap_checkBaddTrueValues() {
+    Map<String, Object> map = createMapOfTrueValues();
+
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "6"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "7"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "8"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "9"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "10"));
+  }
+
+  @DisplayName("After creating a map, check that 'good' false values are correctly interpreted")
+  @Test
+  public void afterCreateMap_checkGoodFalseValues() {
+    Map<String, Object> map = createMapOfFalseValues();
+
+    assertEquals(false, MapUtils.getBooleanValue(map, "1"));
+    assertEquals(false, MapUtils.getBooleanValue(map, "2"));
+    assertEquals(false, MapUtils.getBooleanValue(map, "3"));
+    assertEquals(false, MapUtils.getBooleanValue(map, "4"));
+    assertEquals(false, MapUtils.getBooleanValue(map, "5"));
+  }
+
+  @DisplayName("After creating a map, check that 'bad' false values are correctly interpreted")
+  @Test
+  public void afterCreateMap_checkBadFalseValues() {
+    Map<String, Object> map = createMapOfFalseValues();
+
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "6"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "7"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "8"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "9"));
+    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "10"));
+  }
+
+  private Map<String, Object> createMapWithValue(Object value) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("values", value);
+    return map;
+  }
+
+  private Map<String, Object> createMapOfTrueValues() {
     Map<String, Object> map = new HashMap<>();
     map.put("1", "true");
     map.put("2", "t");
@@ -58,22 +110,10 @@ public class MapUtilsTest {
     map.put("8", "yesss");
     map.put("9", "y ");
     map.put("10", " y ");
-
-    assertEquals(true, MapUtils.getBooleanValue(map, "1"));
-    assertEquals(true, MapUtils.getBooleanValue(map, "2"));
-    assertEquals(true, MapUtils.getBooleanValue(map, "3"));
-    assertEquals(true, MapUtils.getBooleanValue(map, "4"));
-    assertEquals(true, MapUtils.getBooleanValue(map, "5"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "6"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "7"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "8"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "9"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "10"));
+    return map;
   }
 
-  @DisplayName("Check getBooleanValue for false values")
-  @Test
-  public void checkGetBooleanForFalseValues() {
+  private Map<String, Object> createMapOfFalseValues() {
     Map<String, Object> map = new HashMap<>();
     map.put("1", "false");
     map.put("2", "f");
@@ -85,22 +125,6 @@ public class MapUtilsTest {
     map.put("8", "ono");
     map.put("9", "n ");
     map.put("10", " n ");
-
-    assertEquals(false, MapUtils.getBooleanValue(map, "1"));
-    assertEquals(false, MapUtils.getBooleanValue(map, "2"));
-    assertEquals(false, MapUtils.getBooleanValue(map, "3"));
-    assertEquals(false, MapUtils.getBooleanValue(map, "4"));
-    assertEquals(false, MapUtils.getBooleanValue(map, "5"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "6"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "7"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "8"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "9"));
-    assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "10"));
-  }
-
-  private Map<String, Object> createMapWithValue(Object value) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("values", value);
     return map;
   }
 }
