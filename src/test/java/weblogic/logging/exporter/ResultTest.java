@@ -6,6 +6,9 @@
 
 package weblogic.logging.exporter;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
@@ -29,11 +32,12 @@ public class ResultTest {
     assertEquals(true, result.isSuccessful());
   }
 
-  @DisplayName("Check toString() works")
+  @DisplayName("Check toString() includes response, status and successful")
   @Test
-  public void checkToString() {
-    Result result = new Result("good", 200, true);
-
-    assertEquals(EXPECTED_STRING, result.toString());
+  public void toStringIncludesResponseStatusAndSuccessful() {
+    Result result = new Result("good", 1, true);
+    assertThat(
+        result.toString(),
+        allOf(containsString("good"), containsString("1"), containsString("true")));
   }
 }

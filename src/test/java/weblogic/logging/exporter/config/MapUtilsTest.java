@@ -58,7 +58,7 @@ public class MapUtilsTest {
 
   @DisplayName("After creating a map, check that 'bad' true values are correctly interpreted")
   @Test
-  public void afterCreateMap_checkBaddTrueValues() {
+  public void afterCreateMap_checkBadTrueValues() {
     Map<String, Object> map = createMapOfTrueValues();
 
     assertThrows(ConfigurationException.class, () -> MapUtils.getBooleanValue(map, "6"));
