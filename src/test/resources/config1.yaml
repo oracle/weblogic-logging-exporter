@@ -1,0 +1,11 @@
+# Test config file
+
+publishHost: host1
+publishPort: 1234
+weblogicLoggingExporterFilters:
+- FilterExpression:  MSGID != 'BEA-000449'
+weblogicLoggingExporterEnabled: false
+weblogicLoggingExporterSeverity: Warning
+weblogicLoggingExporterBulkSize: 2
+weblogicLoggingIndexName: index1
+domainUID: domain1

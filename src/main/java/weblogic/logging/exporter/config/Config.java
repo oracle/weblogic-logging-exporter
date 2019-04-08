@@ -85,11 +85,9 @@ public class Config {
     try {
       return loadConfig(new FileInputStream(file));
     } catch (FileNotFoundException e) {
-      System.out.println(file.toString() + "Not Found");
+      System.out.println(file.toString() + " Not Found");
     } catch (YamlParserException ex) {
       System.out.println("Error parsing configuration file : " + file.toString());
-    } catch (Exception ex) {
-      System.out.println("Error detected in configuration file.");
     }
     System.out.println("Using default for all parameters");
     return new Config();
