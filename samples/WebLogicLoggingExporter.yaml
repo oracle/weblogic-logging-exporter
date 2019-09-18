@@ -1,8 +1,8 @@
-/*
- * Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
- *
- * Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
- */
+#
+# Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+#
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
 
 # This is a sample configuration file for weblogic Logging Exporter
 # The exporter will look for the file specified by the system variable "WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE",
@@ -25,7 +25,7 @@ publishPort: 9200
 # The "domainUID" used to uniquely identify this domain.  This is used to filter logs in Kibana by the domain they came
 # from.  You should use a unique value for each domain.  If you are using the WebLogic Kubernetes Operator, it is
 # strongly recommended you use the same value as in the domain custom resource.
-domainUid: domain1
+domainUID: domain1
 
 # Decide if this exporter should be enabled.  Default is true.   If set to false, nothing will be logged to Elastic Search.
 weblogicLoggingExporterEnabled:  true
