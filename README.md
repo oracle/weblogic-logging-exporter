@@ -58,7 +58,7 @@ To install the plugin, navigate to your WebLogic Server installation, then enter
 assumes you installed WebLogic Server in `/u01/wlshome`):
 
 ```
-cd /u01/wlshome/oracle_common/plugins/maven/com/oracle/12.2.1/oracle-maven-sync
+cd /u01/wlshome/oracle_common/plugins/maven/com/oracle/oracle-maven-sync/12.2.1
 mvn install:install-file -DpomFile=oracle-maven-sync-12.2.1.pom -Dfile=oracle-maven-sync-12.2.1.jar
 ```
 
