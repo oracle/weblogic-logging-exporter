@@ -50,6 +50,7 @@ class LogExportHandler extends Handler {
   private String fluentdURL;
   private String domainUID;
   private String destination;
+  private String credentials;
 
   public LogExportHandler(Config config) {
     initialize(config);
@@ -163,7 +164,13 @@ class LogExportHandler extends Handler {
 
   private Result executePutOrPostOnUrl(String url, String payload, boolean post) {
     WebTarget target = httpClient.target(url);
-    Invocation.Builder invocationBuilder = target.request().accept("application/json");
+    Invocation.Builder invocationBuilder;
+    if (credentials == null || "".equals(credentials)) {
+      invocationBuilder = target.request().accept("application/json");
+    } else {
+      invocationBuilder =
+          target.request().accept("application/json").header("Authorization", credentials);
+    }
     Response response =
         post
             ? invocationBuilder.post(Entity.json(payload))
@@ -233,12 +240,17 @@ class LogExportHandler extends Handler {
     singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
     bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
     domainUID = config.getDomainUID();
+    credentials = config.getCredentials();
 
     //
     //  Set up the publishing variables...
     //
 
     httpHostPort = "http://" + publishHost + ":" + publishPort;
+    // hack to support https
+    if ("443".equals(publishPort)) {
+      httpHostPort = "https://" + publishHost + ":" + publishPort;
+    }
     singleURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/?pretty";
     bulkURL = httpHostPort + "/" + indexName + "/" + DOC_TYPE + "/_bulk?pretty";
     fluentdURL = httpHostPort + "/" + indexName;

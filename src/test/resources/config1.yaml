@@ -12,3 +12,5 @@ weblogicLoggingExporterSeverity: Warning
 weblogicLoggingExporterBulkSize: 2
 weblogicLoggingIndexName: index1
 domainUID: domain1
+enableServerLog: true
+enableDomain: true

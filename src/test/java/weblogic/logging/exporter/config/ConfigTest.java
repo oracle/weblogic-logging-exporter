@@ -30,7 +30,7 @@ public class ConfigTest {
           + "publishPort=1234, weblogicLoggingExporterSeverity='Warning', "
           + "weblogicLoggingExporterBulkSize='2', enabled=false, "
           + "weblogicLoggingExporterFilters=[FilterConfig{expression='MSGID != 'BEA-000449'', "
-          + "servers=[]}], domainUID='domain1'}";
+          + "servers=[]}], domainUID='domain1', credentials='', serverLogEnabled='false', domainLogEnabled='false'}";
 
   @BeforeEach
   public void setUpStreams() {

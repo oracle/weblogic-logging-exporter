@@ -33,6 +33,7 @@ public class Config {
   private static final String BULK_SIZE = "weblogicLoggingExporterBulkSize";
   private static final String INDEX_NAME = "weblogicLoggingIndexName";
   private static final String DOMAIN_UID = "domainUID";
+  private static final String CREDENTIALS = "credentials";
 
   private String host = DEFAULT_HOST;
   private int port = DEFAULT_PORT;
@@ -42,6 +43,9 @@ public class Config {
   private String severity = null;
   private final List<FilterConfig> filterConfigs = new ArrayList<>();
   private String domainUID = DEFAULT_DOMAIN_UID;
+  private String credentials = "";
+  private boolean serverLogEnabled = false;
+  private boolean domainLogEnabled = false;
 
   private Config() {}
 
@@ -66,6 +70,9 @@ public class Config {
     }
     if (yaml.containsKey(DOMAIN_UID)) {
       domainUID = MapUtils.getStringValue(yaml, DOMAIN_UID);
+    }
+    if (yaml.containsKey(CREDENTIALS)) {
+      credentials = MapUtils.getStringValue(yaml, CREDENTIALS);
     }
     if (bulkSize <= 1) {
       bulkSize = 1;
@@ -168,6 +175,15 @@ public class Config {
         + ", domainUID='"
         + domainUID
         + '\''
+        + ", credentials='"
+        + credentials
+        + '\''
+        + ", serverLogEnabled='"
+        + serverLogEnabled
+        + '\''
+        + ", domainLogEnabled='"
+        + domainLogEnabled
+        + '\''
         + '}';
   }
 
@@ -201,5 +217,17 @@ public class Config {
 
   public String getDomainUID() {
     return domainUID;
+  }
+
+  public String getCredentials() {
+    return credentials;
+  }
+
+  public boolean getServerLogEnabled() {
+    return serverLogEnabled;
+  }
+
+  public boolean getDomainLogEnabled() {
+    return domainLogEnabled;
   }
 }
