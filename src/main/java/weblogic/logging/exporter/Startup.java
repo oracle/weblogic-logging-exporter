@@ -27,8 +27,19 @@ public class Startup {
         If the file doesn't exist, give WARNING, and use default.
         It is assumed that when this is integrated to Operator, the system variable will be set.
       */
+
       String fileName =
-          System.getProperty("WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE", DEFAULT_CONFIG_FILE);
+          System.getProperty(
+              "WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE",
+              System.getenv("WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE"));
+      System.out.println(
+          "JavaProperty/EnvVariable WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE:" + fileName);
+      if (fileName == null || fileName.isEmpty()) {
+        System.out.println(
+            "Env variable WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE is not set. Defaulting to:"
+                + DEFAULT_CONFIG_FILE);
+        fileName = DEFAULT_CONFIG_FILE;
+      }
       File file = new File(fileName);
       System.out.println("Reading configuration from file name: " + file.getAbsolutePath());
       Config config = Config.loadConfig(file);
