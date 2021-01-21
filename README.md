@@ -161,7 +161,7 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    It is also strongly recommended that you consider using a different Elastcsearch index name for each domain.
 
    If you prefer to place the configuration file in a different location, you can set the environment variable
-   `WEBLOGIC_LOGGING_EXPORTE_CONFIG_FILE` to point to the location of the file.
+   `WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE` to point to the location of the file.
 
 1. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
    Logging Exporter and start sending their logs to the specified Elasticsearch instance.  You can then
