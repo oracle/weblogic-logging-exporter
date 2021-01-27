@@ -7,7 +7,7 @@ The WebLogic Logging Exporter adds a log event handler to WebLogic Server,
 such that WebLogic Server logs can be integrated into [Elastic Stack](https://www.elastic.co/products)
 in Kubernetes directly,  by using the [Elasticsearch](https://www.elastic.co/products/elasticsearch) REST API.
 
-The current version of the WebLogic Logging Exporter is 1.0.0, which was released on September 6, 2019.
+The current version of the WebLogic Logging Exporter is 1.0.1, which was released on Wednesday, January 27, 2021.
 This version supports pushing logs into Elasticsearch using the REST API.
 
 The following features are planned for the next few releases:
@@ -92,7 +92,7 @@ git clone git@orahub.oraclecorp.com:oracle/wls-logging-exporter.git
 mvn install
 ```
 
-The `weblogic-logging-exporter-1.0.0.jar` will be available under the `target` directory.
+The `weblogic-logging-exporter.jar` will be available under the `target` directory.
 
 ## Installation
 
@@ -100,7 +100,7 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
 
 1. Download or build the WebLogic Logging Exporter as described above.
 
-1. Copy the `weblogic-logging-exporter-1.0.0.jar` into a suitable location, e.g. into your domain directory.
+1. Copy the `weblogic-logging-exporter.jar` into a suitable location, e.g. into your domain directory.
 
 1. Add a startup class to your domain configuration.
 
@@ -119,11 +119,11 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
     </startup-class>
     ```
 
-1. Add `weblogic-logging-exporter-1.0.0.jar` and `snakeyaml-1.23.jar` to your classpath.
+1. Add `weblogic-logging-exporter.jar` and `snakeyaml-1.27.jar` to your classpath.
 
    This project requires `snakeyaml` to parse the YAML configuration file.  If you built the project locally,
-   you can find this JAR file in your local maven repository at `~/.m2/repository/org/yaml/snakeyaml/1.23/snakeyaml-1.23.jar`.
-   Otherwise, you can download it from [Maven Central](https://search.maven.org/artifact/org.yaml/snakeyaml/1.23/bundle).
+   you can find this JAR file in your local maven repository at `~/.m2/repository/org/yaml/snakeyaml/1.27/snakeyaml-1.27.jar`.
+   Otherwise, you can download it from [Maven Central](https://search.maven.org/artifact/org.yaml/snakeyaml/1.27/bundle).
 
    Place this file in a suitable location, e.g. your domain directory.
 
@@ -132,7 +132,7 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    directory is `/u01/base_domain`):
 
    ```
-   export CLASSPATH="/u01/base_domain/weblogic-logging-exporter-1.0.0.jar:/u01/base_domain/snakeyaml-1.23.jar:$CLASSPATH"
+   export CLASSPATH="/u01/base_domain/weblogic-logging-exporter.jar:/u01/base_domain/snakeyaml-1.27.jar:$CLASSPATH"
    ```
 
 1. Create a configuration file for the WebLogic Logging Exporter.

@@ -1,8 +1,5 @@
-#
-# Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
-#
-# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
-#
+# Copyright (c) 2018, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 # This is a sample configuration file for weblogic Logging Exporter
 # The exporter will look for the file specified by the system variable "WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE",
