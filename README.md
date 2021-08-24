@@ -125,9 +125,15 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    you can find this JAR file in your local maven repository at `~/.m2/repository/org/yaml/snakeyaml/1.27/snakeyaml-1.27.jar`.
    Otherwise, you can download it from [Maven Central](https://search.maven.org/artifact/org.yaml/snakeyaml/1.27/bundle).
 
-   Place this file in a suitable location, e.g. your domain directory.
+   If you want to write the JSON logs to a file instead of sending it elasticsearch directly you will also need these jars:
+   - ecs-logging-core-1.1.0.jar (used for JSON logging, https://mvnrepository.com/artifact/co.elastic.logging/ecs-logging-core)
+   - jul-ecs-formatter-1.1.0.jar (used for JSON logging, https://mvnrepository.com/artifact/co.elastic.logging/jul-ecs-formatter/1.1.0)
+   - slf4j-api-1.7.32.jar (optional and is used for MDC, https://mvnrepository.com/artifact/org.slf4j/slf4j-api)
+   - slf4j-jdk14-1.7.32.jar (optional and is used for MDC, https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14)
 
-   Update the server classpath to include these two files.  This can be done by adding a statement to the end of your
+   Place the file(s) in a suitable location, e.g. your domain directory.
+
+   Update the server classpath to include these file(s).  This can be done by adding a statement to the end of your
    `setDomainEnv.sh` script in your domain's `bin` directory as follows (this example assumes your domain
    directory is `/u01/base_domain`):
 
@@ -163,7 +169,10 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    If you prefer to place the configuration file in a different location, you can set the environment variable
    `WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE` to point to the location of the file.
 
-1. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
+   If you want to write the JSON logs to a file instead of sending it elasticsearch directly use the following configuration
+   [file](samples/WeblogicFileLoggingExporter.yaml) and adjust it to your needs. Make sure to rename it to WebLogicLoggingExporter.yaml.
+
+6. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
    Logging Exporter and start sending their logs to the specified Elasticsearch instance.  You can then
    access them in Kibana as shown in the example below. You will need to create an index first and then go to
    the visualization page.

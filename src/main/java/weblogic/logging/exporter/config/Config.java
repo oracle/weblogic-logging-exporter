@@ -31,6 +31,13 @@ public class Config {
   private static final String INDEX_NAME = "weblogicLoggingIndexName";
   private static final String DOMAIN_UID = "domainUID";
 
+  private static final String WRITE_TO_FILE_ENABLED = "writeToFileEnabled";
+  private static final String OUTPUT_FILE = "outputFile";
+  private static final String MAX_ROLLBACK_FILES = "maxRollbackFiles";
+  private static final String MAX_FILE_SIZE = "maxFileSize";
+  private static final String APPEND_TO_FILE = "appendToFile";
+  private static final String FILE_LOGGING_LOG_LEVEL = "fileLoggingLogLevel";
+
   private String host = DEFAULT_HOST;
   private int port = DEFAULT_PORT;
   private String indexName = DEFAULT_INDEX_NAME;
@@ -39,6 +46,14 @@ public class Config {
   private String severity = null;
   private final List<FilterConfig> filterConfigs = new ArrayList<>();
   private String domainUID = DEFAULT_DOMAIN_UID;
+
+  private boolean fileLoggingEnabled;
+  private String outputFile;
+  private Integer getMaxRollbackFiles;
+  private Integer maxFileSize;
+  private boolean appendToFile;
+
+  private String fileLoggingLogLevel = "INFO";
 
   private Config() {}
 
@@ -76,6 +91,26 @@ public class Config {
       System.out.println("Index name is converted to all lower case : " + indexName);
     }
     if (yaml.containsKey(FILTERS)) appendFilters(yaml.get(FILTERS));
+
+    // File output
+    if (yaml.containsKey(WRITE_TO_FILE_ENABLED)) {
+      fileLoggingEnabled = MapUtils.getBooleanValue(yaml, WRITE_TO_FILE_ENABLED);
+    }
+    if (yaml.containsKey(OUTPUT_FILE)) {
+      outputFile = MapUtils.getStringValue(yaml, OUTPUT_FILE);
+    }
+    if (yaml.containsKey(MAX_ROLLBACK_FILES)) {
+      getMaxRollbackFiles = MapUtils.getIntegerValue(yaml, MAX_ROLLBACK_FILES);
+    }
+    if (yaml.containsKey(MAX_FILE_SIZE)) {
+      maxFileSize = MapUtils.getIntegerValue(yaml, MAX_FILE_SIZE);
+    }
+    if (yaml.containsKey(APPEND_TO_FILE)) {
+      appendToFile = MapUtils.getBooleanValue(yaml, APPEND_TO_FILE);
+    }
+    if (yaml.containsKey(FILE_LOGGING_LOG_LEVEL)) {
+      fileLoggingLogLevel = MapUtils.getStringValue(yaml, FILE_LOGGING_LOG_LEVEL);
+    }
   }
 
   public static Config loadConfig(File file) {
@@ -143,29 +178,22 @@ public class Config {
 
   @Override
   public String toString() {
-    return "Config{"
-        + "weblogicLoggingIndexName='"
-        + indexName
-        + '\''
-        + ", publishHost='"
-        + host
-        + '\''
-        + ", publishPort="
-        + port
-        + ", weblogicLoggingExporterSeverity='"
-        + severity
-        + '\''
-        + ", weblogicLoggingExporterBulkSize='"
-        + bulkSize
-        + '\''
-        + ", enabled="
-        + enabled
-        + ", weblogicLoggingExporterFilters="
-        + filterConfigs
-        + ", domainUID='"
-        + domainUID
-        + '\''
-        + '}';
+    return "Config{" +
+            "host='" + host + '\'' +
+            ", port=" + port +
+            ", indexName='" + indexName + '\'' +
+            ", bulkSize=" + bulkSize +
+            ", enabled=" + enabled +
+            ", severity='" + severity + '\'' +
+            ", filterConfigs=" + filterConfigs +
+            ", domainUID='" + domainUID + '\'' +
+            ", fileLoggingEnabled=" + fileLoggingEnabled +
+            ", outputFile='" + outputFile + '\'' +
+            ", getMaxRollbackFiles=" + getMaxRollbackFiles +
+            ", maxFileSize=" + maxFileSize +
+            ", appendToFile=" + appendToFile +
+            ", fileLoggingLogLevel='" + fileLoggingLogLevel + '\'' +
+            '}';
   }
 
   public String getHost() {
@@ -198,5 +226,29 @@ public class Config {
 
   public String getDomainUID() {
     return domainUID;
+  }
+
+  public boolean isFileLoggingEnabled() {
+    return fileLoggingEnabled;
+  }
+
+  public String getOutputFile() {
+    return outputFile;
+  }
+
+  public Integer getGetMaxRollbackFiles() {
+    return getMaxRollbackFiles;
+  }
+
+  public Integer getMaxFileSize() {
+    return maxFileSize;
+  }
+
+  public boolean getAppendToFile() {
+    return appendToFile;
+  }
+
+  public String getFileLoggingLogLevel() {
+    return fileLoggingLogLevel;
   }
 }

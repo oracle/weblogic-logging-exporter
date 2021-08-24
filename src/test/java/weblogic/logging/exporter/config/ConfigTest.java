@@ -22,12 +22,7 @@ public class ConfigTest {
   private final PrintStream originalOut = System.out;
   private final PrintStream originalErr = System.err;
 
-  private static final String EXPECTED_STRING =
-      "Config{weblogicLoggingIndexName='index1', publishHost='host1', "
-          + "publishPort=1234, weblogicLoggingExporterSeverity='Warning', "
-          + "weblogicLoggingExporterBulkSize='2', enabled=false, "
-          + "weblogicLoggingExporterFilters=[FilterConfig{expression='MSGID != 'BEA-000449'', "
-          + "servers=[]}], domainUID='domain1'}";
+  private static final String EXPECTED_STRING = "Config{host='host1', port=1234, indexName='index1', bulkSize=2, enabled=false, severity='Warning', filterConfigs=[FilterConfig{expression='MSGID != 'BEA-000449'', servers=[]}], domainUID='domain1', fileLoggingEnabled=false, outputFile='null', getMaxRollbackFiles=null, maxFileSize=null, appendToFile=false, fileLoggingLogLevel='INFO'}";
 
   @BeforeEach
   public void setUpStreams() {
@@ -115,6 +110,7 @@ public class ConfigTest {
   @Test
   public void checkToStringWorksAsExpected() {
     Config config = Config.loadConfig(new File("src/test/resources/config1.yaml"));
+    System.out.println(config.toString());
     assertEquals(EXPECTED_STRING, config.toString());
   }
 }
