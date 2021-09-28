@@ -186,11 +186,20 @@ yellow open   wls                 q4Q2v2dXTBOyYsHZMdDe3H 5   1         23       
 If you wish to test on your local machine, a [sample](samples/run-elk-local.sh) is provided to run Elasticsearch
 and Kibana in Docker on your local machine.
 
+
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+This project welcomes contributions from the community. Before submitting a pull
+request, please [review our contribution guide](./CONTRIBUTING.md).
 
+## Security
+
+Please consult the [security guide](./SECURITY.md) for our responsible security
+vulnerability disclosure process.
 
 ## License
 
-This project is licensed under the [_Universal Permissive License, Version 1.0_](http://oss.oracle.com/licenses/upl)
+Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+
+Released under the Universal Permissive License v1.0 as shown at
+<https://oss.oracle.com/licenses/upl/>.
