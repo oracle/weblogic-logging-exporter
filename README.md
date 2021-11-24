@@ -96,7 +96,7 @@ The `weblogic-logging-exporter.jar` will be available under the `target` directo
 
 ## Installation
 
-This section outlines the steps that are required to add the Weblogic Logging Exporter to Weblogic Server.
+This section outlines the steps that are required to add the WebLogic Logging Exporter to WebLogic Server.
 
 1. Download or build the WebLogic Logging Exporter as described above.
 
@@ -119,17 +119,7 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
     </startup-class>
     ```
 
-1. Add `weblogic-logging-exporter.jar` and `snakeyaml-1.27.jar` to your classpath.
-
-   This project requires `snakeyaml` to parse the YAML configuration file.  If you built the project locally,
-   you can find this JAR file in your local maven repository at `~/.m2/repository/org/yaml/snakeyaml/1.27/snakeyaml-1.27.jar`.
-   Otherwise, you can download it from [Maven Central](https://search.maven.org/artifact/org.yaml/snakeyaml/1.27/bundle).
-
-   If you want to write the JSON logs to a file instead of sending it elasticsearch directly you will also need these jars:
-   - ecs-logging-core-1.1.0.jar (used for JSON logging, https://mvnrepository.com/artifact/co.elastic.logging/ecs-logging-core)
-   - jul-ecs-formatter-1.1.0.jar (used for JSON logging, https://mvnrepository.com/artifact/co.elastic.logging/jul-ecs-formatter/1.1.0)
-   - slf4j-api-1.7.32.jar (optional and is used for MDC, https://mvnrepository.com/artifact/org.slf4j/slf4j-api)
-   - slf4j-jdk14-1.7.32.jar (optional and is used for MDC, https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14)
+1. Add `weblogic-logging-exporter.jar` to your classpath.
 
    Place the file(s) in a suitable location, e.g. your domain directory.
 
@@ -138,7 +128,7 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    directory is `/u01/base_domain`):
 
    ```
-   export CLASSPATH="/u01/base_domain/weblogic-logging-exporter.jar:/u01/base_domain/snakeyaml-1.27.jar:$CLASSPATH"
+   export CLASSPATH="/u01/base_domain/weblogic-logging-exporter.jar:$CLASSPATH"
    ```
 
 1. Create a configuration file for the WebLogic Logging Exporter.
@@ -170,7 +160,7 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    `WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE` to point to the location of the file.
 
    If you want to write the JSON logs to a file instead of sending it elasticsearch directly use the following configuration
-   [file](samples/WeblogicFileLoggingExporter.yaml) and adjust it to your needs. Make sure to rename it to WebLogicLoggingExporter.yaml.
+   [file](samples/WebLogicFileLoggingExporter.yaml) and adjust it to your needs. Make sure to rename it to WebLogicLoggingExporter.yaml.
 
 6. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
    Logging Exporter and start sending their logs to the specified Elasticsearch instance.  You can then

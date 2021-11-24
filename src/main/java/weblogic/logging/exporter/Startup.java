@@ -8,7 +8,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import co.elastic.logging.jul.EcsFormatter;
 import weblogic.logging.LoggingHelper;
 import weblogic.logging.ServerLoggingHandler;
 import weblogic.logging.exporter.config.Config;
@@ -18,7 +17,7 @@ public class Startup {
   private static final String DEFAULT_CONFIG_FILE = "config/WebLogicLoggingExporter.yaml";
 
   public static void main(String[] argv) {
-    System.out.println("======================= Weblogic Logging Exporter Startup class called");
+    System.out.println("======================= WebLogic Logging Exporter Startup class called");
     try {
       Logger logger = LoggingHelper.getServerLogger();
 
@@ -30,15 +29,15 @@ public class Startup {
       */
 
       String fileName =
-          System.getProperty(
-              "WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE",
-              System.getenv("WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE"));
+              System.getProperty(
+                      "WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE",
+                      System.getenv("WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE"));
       System.out.println(
-          "JavaProperty/EnvVariable WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE:" + fileName);
+              "JavaProperty/EnvVariable WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE:" + fileName);
       if (fileName == null || fileName.isEmpty()) {
         System.out.println(
-            "Env variable WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE is not set. Defaulting to:"
-                + DEFAULT_CONFIG_FILE);
+                "Env variable WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE is not set. Defaulting to:"
+                        + DEFAULT_CONFIG_FILE);
         fileName = DEFAULT_CONFIG_FILE;
       }
       File file = new File(fileName);
@@ -57,14 +56,14 @@ public class Startup {
         // Register a file handler using the provided config
         FileHandler fh = new FileHandler(config.getOutputFile(), config.getMaxFileSize(), config.getGetMaxRollbackFiles(), config.getAppendToFile());
         fh.setLevel(Level.parse(config.getFileLoggingLogLevel()));
-        fh.setFormatter(new EcsFormatter());
+        fh.setFormatter(new WebLogicLogFormatter(config.getDomainUID()));
         logger.addHandler(fh);
-       } else {
+      } else {
         System.out.println("WebLogic Elasticsearch Logging Exporter is disabled");
       }
-      // also catch errors so that Weblogic does not crash when a required library was not placed in the classpath correctly.
+      // also catch errors so that WebLogic does not crash when a required library was not placed in the classpath correctly.
     } catch (Error | Exception e) {
-      System.out.println("======================= Something went wrong, the Weblogic Logging Exporter is not activated");
+      System.out.println("======================= Something went wrong, the WebLogic Logging Exporter is not activated");
       e.printStackTrace();
     }
   }
