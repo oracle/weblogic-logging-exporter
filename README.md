@@ -96,7 +96,7 @@ The `weblogic-logging-exporter.jar` will be available under the `target` directo
 
 ## Installation
 
-This section outlines the steps that are required to add the Weblogic Logging Exporter to Weblogic Server.
+This section outlines the steps that are required to add the WebLogic Logging Exporter to WebLogic Server.
 
 1. Download or build the WebLogic Logging Exporter as described above.
 
@@ -125,9 +125,9 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
    you can find this JAR file in your local maven repository at `~/.m2/repository/org/yaml/snakeyaml/1.27/snakeyaml-1.27.jar`.
    Otherwise, you can download it from [Maven Central](https://search.maven.org/artifact/org.yaml/snakeyaml/1.27/bundle).
 
-   Place this file in a suitable location, e.g. your domain directory.
+   Place the file(s) in a suitable location, e.g. your domain directory.
 
-   Update the server classpath to include these two files.  This can be done by adding a statement to the end of your
+   Update the server classpath to include these file(s).  This can be done by adding a statement to the end of your
    `setDomainEnv.sh` script in your domain's `bin` directory as follows (this example assumes your domain
    directory is `/u01/base_domain`):
 
@@ -137,33 +137,43 @@ This section outlines the steps that are required to add the Weblogic Logging Ex
 
 1. Create a configuration file for the WebLogic Logging Exporter.
 
-   Create a file named `WebLogicLoggingExporter.yaml` in your domain's `config` directory.  You can copy the
-   [sample provided in this project](samples/WebLogicLoggingExporter.yaml) as a starting point.  That sample
-   contains details of all of the available configuration options.  A completed configuration file might look
-   like this:
+   There are two options currently - the version 1.x configuration, or the new version 2.x configuration - please
+   note that the 2.x configuration is `alpha` and therefore subject to change as we get close to the 2.0 release.
 
-   ```
-   publishHost:  localhost
-   publishPort:  9200
-   domainUID:  domain1
-   weblogicLoggingExporterEnabled: true
-   weblogicLoggingIndexName:  domain1-wls
-   weblogicLoggingExporterSeverity:  Notice
-   weblogicLoggingExporterBulkSize: 1
-   weblogicLoggingExporterFilters:
-   - filterExpression:  'severity > Warning'
-   ```
+   a. Version 1.x configuration
 
-   Note that you must give a unique `domainUID` to each domain.  This value is used to filter logs by domain when you
-   send the logs from multiple domains to the same Elasticsearch server.  If you are using the WebLogic Kubernetes
-   Operator, it is strongly recommended that you use the same `domainUID` value that you use for the domain.
+       Create a file named `WebLogicLoggingExporter.yaml` in your domain's `config` directory.  You can copy the
+       [sample provided in this project](samples/WebLogicLoggingExporter.yaml) as a starting point.  That sample
+       contains details of all of the available configuration options.  A completed configuration file might look
+       like this:
 
-   It is also strongly recommended that you consider using a different Elastcsearch index name for each domain.
+       ```
+       publishHost:  localhost
+       publishPort:  9200
+       domainUID:  domain1
+       weblogicLoggingExporterEnabled: true
+       weblogicLoggingIndexName:  domain1-wls
+       weblogicLoggingExporterSeverity:  Notice
+       weblogicLoggingExporterBulkSize: 1
+       weblogicLoggingExporterFilters:
+       - filterExpression:  'severity > Warning'
+       ```
 
-   If you prefer to place the configuration file in a different location, you can set the environment variable
-   `WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE` to point to the location of the file.
+       Note that you must give a unique `domainUID` to each domain.  This value is used to filter logs by domain when you
+       send the logs from multiple domains to the same Elasticsearch server.  If you are using the WebLogic Kubernetes
+       Operator, it is strongly recommended that you use the same `domainUID` value that you use for the domain.
 
-1. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
+       It is also strongly recommended that you consider using a different Elastcsearch index name for each domain.
+
+   b. Version 2.x configuration
+
+       If you prefer to place the configuration file in a different location, you can set the environment variable
+       `WEBLOGIC_LOGGING_EXPORTER_CONFIG_FILE` to point to the location of the file.
+
+       If you want to write the JSON logs to a file instead of sending it elasticsearch directly use the following configuration
+       [file](samples/WebLogicFileLoggingExporter.yaml) and adjust it to your needs. Make sure to rename it to WebLogicLoggingExporter.yaml.
+
+6. Restart the servers to activate the changes.  After restarting the servers, they will load the WebLogic
    Logging Exporter and start sending their logs to the specified Elasticsearch instance.  You can then
    access them in Kibana as shown in the example below. You will need to create an index first and then go to
    the visualization page.

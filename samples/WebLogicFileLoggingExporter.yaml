@@ -1,0 +1,15 @@
+# turn off the elasticsearch output
+weblogicLoggingExporterEnabled: false
+
+# configure json logging output
+writeToFileEnabled: true
+# %g is necessary for rollback of log files.
+outputFile: '/var/log/oracle/json-logging%g.log'
+# Max open files
+maxRollbackFiles: 3
+# Max file size in bytes, this is 50 MB
+maxFileSize: 52428800
+# Should the log file be appended to when the new logger is created
+appendToFile: true
+# Optional configuration for specifying which levels get logged to the json log file.
+# fileLoggingLogLevel: INFO
