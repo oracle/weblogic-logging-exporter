@@ -1,5 +1,8 @@
 # WebLogic Logging Exporter
 
+**NOTE**: The WebLogic Logging Exporter is deprecated as of its last release, Release 2.0-alpha-1, on Nov 29, 2021.
+Users are encouraged to use Fluentd or Logstash.
+
 The goal of this project is to provide an easy to configure, robust, and production-ready solution to access
 WLS log information through Elasticsearch and Kibana.
 
@@ -12,10 +15,10 @@ This version supports pushing logs into Elasticsearch using the REST API.
 
 The following features are planned for the next few releases:
 
-* Push logs into a fleuntd aggregator using the REST API.
+* Push logs into a Fluentd aggregator using the REST API.
 * Write logs in JSON format into the file system so that they could be collected and published by a
-  sidecar, e.g. fluentd or Logstash.
-* Provide the ability to publish other logs (i.e. other than the server logs).
+  sidecar, for example, Fluentd or Logstash.
+* Provide the ability to publish other logs (for example, other than the server logs).
 
 ## Contents
 
