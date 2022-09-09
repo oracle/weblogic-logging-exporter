@@ -222,7 +222,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr-complete</artifactId>
-            <version>3.5.2</version>
+            <version>3.5.3</version>
             <!-- we need it in unit tests but the weblogic runtime provides it at run time -->
             <scope>test</scope>
         </dependency>
