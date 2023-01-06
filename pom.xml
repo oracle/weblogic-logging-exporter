@@ -212,7 +212,7 @@
         <dependency>
             <groupId>co.elastic.logging</groupId>
             <artifactId>jul-ecs-formatter</artifactId>
-            <version>1.2.0</version>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
