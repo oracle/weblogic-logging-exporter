@@ -1,7 +1,12 @@
 # WebLogic Logging Exporter
 
-**NOTE**: The WebLogic Logging Exporter is deprecated as of its last release, Release 2.0-alpha-1, on Nov 29, 2021.
-Users are encouraged to use Fluentd or Logstash.
+**NOTE**: The WebLogic Logging Exporter project has been archived. Now, the repository is read-only
+and all issues, pull requests, code, labels, milestones, and such, also have become read-only.  Contributors with
+access to the repository only can fork or star the project.
+
+Users are encouraged to use Fluentd or Logstash. If you use Fluentd to export logs to Elasticsearch or OpenSearch,
+then you may be interested in the WebLogic Kubernetes Operator documentation that describes how you can use Fluentd to export
+[WebLogic logs to Elasticsearch](https://oracle.github.io/weblogic-kubernetes-operator/samples/elastic-stack/weblogic-domain/).
 
 The goal of this project is to provide an easy to configure, robust, and production-ready solution to access
 WLS log information through Elasticsearch and Kibana.
